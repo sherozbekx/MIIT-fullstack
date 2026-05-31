@@ -1,0 +1,48 @@
+<div class="login-container">
+    <div class="login-card">
+        <h1 class="form-title">Admin panelga kirish</h1>
+
+        <div class="form-card">
+            <label class="form-label">Phone</label>
+            <input id="phone" type="text" class="form-input" placeholder="Phone kiriting ... ">
+        </div>
+        <div class="form-card">
+            <label class="form-label">Parol</label>
+            <input id="password" type="password" class="form-input" placeholder="Parolingizni kiriitng ...">
+        </div>
+        <button class="btns" type="button" style="cursor: pointer;" onclick="login()">
+            Kirish
+        </button>
+    </div>
+</div>
+
+<script>
+
+    const login = () => {
+        const phone = document.getElementById("phone").value;
+        const pass = document.getElementById("password").value;
+        if (phone == "" || pass == "") alert("Ma'lumotni kiriting")
+        else {
+
+            axios.post("/api/admin/sign-in", {
+                phone: phone,
+                password: pass,
+            }).then((res) => {
+                const data = res.data;
+                if (data.status == false) {
+                    alert("Phone yoki parolimngiz xato")
+                }
+                else {
+                    const token = res.data.data;
+                    window.localStorage.setItem("hTawDwdI4awd412wa", token)
+                    window.localStorage.setItem("lfAvjgyYuad512dwa", "eyJhbGciOiJIUzI1AajkasInR5cCI6Ikp13123VCJ9.6123yJ6123ZCI6IjY3OTdlODA4YTEyODdlMTg2AWdawddolbayebmRhMzEzNyIsIm5hbWUiOiJxd2U4moiLCJpYXQiOjE3Mzg4MzI3MzcsImV4cCI6MTczODgzOTkzN30.GV4h2P96DeFpYAIfCSG_ZPgtkPM4apkwv3CaYZvlEjI")
+                    window.localStorage.setItem("GtKqjnmCjha920wpz", "eyJhbGciOiJIUzI1AawgIntyirealnopidara131.512323yJ6daCI6IjY3OTdlODA4YT4123ODdlg2AWddolbayebmRhMzEzNyIsIm5hbWUiOiJdawd2U4moiLCJpYdaXQiOjE3Mzg4MzI3MzcsImV4cCI6MTczOgzOTkzG57.HKh1P96DeFpYAI4fCSG_GDakfHJ5aplwh3CaYdvlEjI")
+                    window.location.replace("/admin/index")
+                }
+            })
+
+
+        }
+    }
+
+</script>

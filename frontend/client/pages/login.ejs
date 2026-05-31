@@ -1,0 +1,40 @@
+<div class="login-page mt-100">
+    <div class="container">
+        <div action="#" class="login-form common-form mx-auto">
+            <div class="section-header mb-3">
+                <h2 class="section-heading text-center">Kirish</h2>
+            </div>
+            <div class="row">
+
+                <span class="alert alert-danger m-0" id="ALERT" style="display: none;">
+                    Pochta yoki parolingiz xato. Qayta tekshiring
+                </span>
+
+                <div class="col-12">
+                    <fieldset>
+                        <label class="label">Pochtangizni kiriting</label>
+                        <input style="padding-right: 10px; padding-left: 10px;" type="email" id="email" />
+                    </fieldset>
+                </div>
+                <div class="col-12">
+                    <fieldset>
+                        <label class="label">Parolni kiriting</label>
+                        <input style="padding-right: 10px; padding-left: 10px;" type="password" id="password" />
+                    </fieldset>
+                </div>
+                <div class="col-12 mt-3">
+                    <a href="#" class="text_14 d-block">Parolni tiklash?</a>
+                    <button onclick="login()" type="button" class="btn-primary d-block mt-4 btn-signin">Kirish</button>
+                    <a href="/register" class="btn-secondary mt-2 btn-signin">Ro'yhatdan o'tish</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/axios.min.js"></script>

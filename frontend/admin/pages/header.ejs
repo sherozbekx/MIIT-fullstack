@@ -1,0 +1,288 @@
+<div class="main__items">
+
+    <h1 style="text-align: center;" class="mt-2">Header menu</h1>
+
+    <div class="row col-md-10 ms-16">
+        <button data-bs-toggle="offcanvas" data-bs-target="#CREATE_DATA" aria-controls="CREATE_DATA" type="button"
+            class="btn col-md-1 btn-success btn-sm">Create</button>
+        <button data-bs-toggle="offcanvas" data-bs-target="#ARCHIVE_DATA" aria-controls="ARCHIVE_DATA" type="button"
+            class="btn col-md-1 btn-danger btn-sm  ms-1">Archive</button>
+    
+    </div>
+    
+    
+    <!-- Jadval -->
+    <div class="row col-md-12 mt-2" style="padding: 20px 110px;">
+        <div class="col-md-12">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr class="table-dark">
+                        <th style="width: 5%;" class="text-center">#</th>
+                        <th style="width: 20%;">Name - UZ</th>
+                        <th style="width: 20%; background-color: #15616d !important; color: #ffecd1;">GMenu</th>
+                        <th>Active</th>
+                        <th>Link</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th style="width: 18%;">Edit</th>
+                    </tr>
+                </thead>
+                <tbody class="SET-TABLE">
+    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Create -->
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="CREATE_DATA"
+    aria-labelledby="CREATE_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Create</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <input type="text" class="form-control form-control-sm" id="NameUz" placeholder="Asosiy Menu nomi">
+        <input type="text" class="form-control form-control-sm mt-2" id="NameRu" placeholder="Название Гл. Меню">
+        <input type="text" class="form-control form-control-sm mt-2" id="NameEng" placeholder="Main Menu name">
+        <input type="text" class="form-control form-control-sm mt-2" id="link" placeholder="Link">
+        <div class="col-md-12 " style="align-items: center;">
+            <label>Active Page?</label>
+            <input type="checkbox" class="mt-2" id="activeData">
+            <span style="font-size: 10px;">Check if yes</span>
+        </div>
+        <div class="col-md-12 ">
+            <label>Choose GMenu</label>
+            <select id="gmenu" class="form-control"> </select>
+        </div>
+        <button onclick="create_data()" type="button" class="btn col-md-3 mt-3 btn-success btn-sm">Save</button>
+    </div>
+</div>
+<!-- Archive -->
+<div class="offcanvas offcanvas-end" style="width: 55%;" data-bs-backdrop="static" tabindex="-1" id="ARCHIVE_DATA"
+    aria-labelledby="ARCHIVE_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Archive datas</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col">#</th>
+                    <th scope="col">Name - UZ</th>
+                    <th scope="col" style="background-color: #15616d !important; color: #ffecd1;">GMenu</th>
+                    <th scope="col">Active</th>
+                    <th scope="col">Link</th>
+                    <th scope="col" style="width: 5%;">Status</th>
+                    <th scope="col" style="width: 5%;">Sana</th>
+                    <th scope="col" style="width: 15%;">Sozlama</th>
+                </tr>
+            </thead>
+            <tbody class="SET-TABLE-ARCHIVE">
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<!-- Edit -->
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="EDIT_DATA" aria-labelledby="EDIT_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Edit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body edit-data">
+
+    </div>
+</div>
+
+
+<script src="/assets/js/axios.min.js"></script>
+<!-- <script src="/assets/js/jquery.min.js"></script> -->
+<script>
+
+
+    const get_all_gmenus = async (menu) => {
+        axios.get("/api/gmenu/all", { params: { status: 'active' } }).then(async (res) => {
+            const data = res.data.data; // [{}, {}, {}, ...]
+            const elem = $(menu);
+            await elem.html('')
+            elem.append(``)
+            data.forEach((index) => {
+                elem.append(`<option value="${index._id}">${index.name.uz}</option>`)
+            });
+        })
+    }
+    get_all_gmenus('#gmenu')
+
+    const set_table_data = async (Arrays, Classes) => {
+        const result = Arrays;
+        const setTable = $(Classes)
+        await setTable.html("")
+        
+        result.forEach((item, index) => {
+            setTable.append(`
+                    <tr>
+                        <th>${index += 1}</th>
+                        <td>${item.name.uz}</td>
+                        <td style="background-color: ${item.gmenu == "" || item.gmenu == undefined || item.gmenu == null ? `#dc3545 !important; color: #ffff;` : `#ff7d00 !important; color: #001524;`}">${item.gmenu == "" || item.gmenu == undefined || item.gmenu == null ? `GMenu has been deleted` : `${item.gmenu.name.uz}`}</td>
+                        <td>
+                            ${item.active == false ? 
+                            `<span style="font-weight: 500; font-size: 13px;" class="badge text-bg-danger">False</span>`
+                            :
+                            `<span style="font-weight: 500; font-size: 13px;" class="badge text-bg-primary">True</span>`
+                            }
+                        </td>
+                        <td>
+                            ${item.link == "" || item.link == undefined || item.link == null ? 
+                            `<span style="font-weight: 500; font-size: 13px;">No link</span>`
+                            :
+                            `<a style="font-weight: 500; font-size: 13px;" href="${item.link}" target=”_blank”>Visit</a>`
+                            }
+                        </td>
+                        <td>
+                            ${item.status == 'active' ?
+                            `<span style="font-weight: 500; font-size: 13px;" class="badge text-bg-success">Active</span>`
+                            :
+                            `<span style="font-weight: 500; font-size: 13px;" class="badge text-bg-danger">Freeze</span>`
+                            }
+                        </td>
+                        <td>${new Date(item.createdAt).toLocaleDateString('en-GB')}</td>
+                        <td>
+                            
+                            ${item.status == 'active' ?
+                    `
+                                    <button data-bs-toggle="offcanvas" data-bs-target="#EDIT_DATA" aria-controls="EDIT_DATA" onclick="get_data('${item._id}')" type="button" class="btn btn-warning btn-sm" style="font-size: 12px;" >
+                                        Edit
+                                    </button>
+                                    <button onclick="change_status('${item._id}', 'archive')" type="button" class="btn btn-danger btn-sm" style="font-size: 12px;" >
+                                        Archive
+                                    </button>
+                                `
+                    :
+                    `
+                                    <button onclick="change_status('${item._id}', 'active')" type="button" class="btn btn-primary btn-sm" style="font-size: 12px;" >
+                                        Active
+                                    </button>
+                                    <button onclick="fullDelete('${item._id}')" type="button" class="btn btn-danger btn-sm" style="font-size: 12px;" >
+                                        Dell
+                                    </button>
+                                `
+                }
+                        </td>
+                    </tr>
+                `)
+        });
+        
+    }
+
+    const get_all_datas = async (Status) => {
+        axios.get("/api/header/all", { params: { status: Status } }).then(async (res) => {
+            if (Status == 'active') {
+                set_table_data(res.data.data, '.SET-TABLE')
+            }
+            else {
+                set_table_data(res.data.data, '.SET-TABLE-ARCHIVE')
+            }
+        })
+    }
+    get_all_datas('active')    
+    get_all_datas('archive')    
+
+    // 2.Create
+    const create_data = async () => {
+        const nameUz = document.getElementById("NameUz").value;
+        const nameRu = document.getElementById("NameRu").value;
+        const nameEng = document.getElementById("NameEng").value;
+        const link = document.getElementById("link").value;
+        const gmenu = document.getElementById("gmenu").value;
+        const checkedValue = document.getElementById("activeData").checked;
+        
+        if (gmenu == "") alert("Malumotni kiriting")
+        else {
+            axios.post("/api/header/create", { name: {uz: nameUz, ru: nameRu, eng: nameEng}, gmenu, link, active: checkedValue }).then((res) => {
+                const result = res.data;
+                if (result.status == true) {
+                    get_all_datas('active') 
+                }
+            })
+        }
+    }
+
+    // 3.Get and edit
+    const get_data = async (id) => {
+        axios.get(`/api/header/${id}`).then(async (res) => {
+            const result = res.data;           
+            get_all_gmenus('#GMenu')
+            if (result.status == true) {
+                // const data = res.data.data; // [{}, {}, {}, ...]
+                const setTable = $(".edit-data")
+                await setTable.html("")
+                setTable.append(`
+                    <input id="NamesUz" value="${result.data.name.uz.replace(/"/g, "&quot;")}" type="text" class="form-control form-control-sm"  placeholder="Name - UZ">
+                    <input id="NamesRu" value="${result.data.name.ru}" type="text" class="form-control form-control-sm"  placeholder="Name - RU">
+                    <input id="NamesEng" value="${result.data.name.eng}" type="text" class="form-control form-control-sm"  placeholder="Name - ENG">
+                    <input id="Linkk" value="${result.data.link}" type="text" class="form-control form-control-sm"  placeholder="Link">
+                    <div class="col-md-12 " style="align-items: center;">
+                        <label>Active Page?</label>
+                        <input type="checkbox" class="mt-2" id="activeDataB" ${result.data.active ? "checked" : ""}>
+                        <span style="font-size: 10px;">Check if yes</span>
+                    </div>
+                    <div class="col-md-12 ">
+                        <label>GMenu</label>
+                        <select id="GMenuA" class="form-control" >
+                            ${result.data.gmenu == "" ? `No Data` : `<option value="${result.data.gmenu._id}">${result.data.gmenu.name.uz}</option>`}
+                            
+                        </select>
+                    </div>
+                    <button onclick="update_data('${result.data._id}')" type="button" class="btn col-md-3 mt-3 btn-success btn-sm">Edit</button>
+                `);
+            }
+        })
+    }
+
+    // 4.Edit
+    const update_data = async (id) => {
+        const namingUz = document.getElementById('NamesUz').value;
+        const namingRu = document.getElementById('NamesRu').value;
+        const namingEng = document.getElementById('NamesEng').value;
+        const linkk = document.getElementById('Linkk').value;
+        const gmenub = document.getElementById('GMenuA').value;
+        const activeDataB = document.getElementById('activeDataB').checked;
+        if (gmenub == "" ) alert("Malumotni kiriting")
+        else {
+            axios.put(`/api/header/${id}`, { name: {uz: namingUz, ru: namingRu, eng: namingEng}, gmenu: gmenub, active: activeDataB, link: linkk }).then((res) => {
+                const result = res.data;
+                if (result.status == true) {
+                    get_all_datas('active')  
+                    get_all_datas('archive')  
+                }
+            })
+        }
+    }
+
+    // 5.Faollashtir yoki Archivelash
+    const change_status = async (id, statusName) => {
+        axios.put(`/api/header/${id}`, { status: statusName }).then((res) => {
+            const result = res.data;
+            if (result.status == true) {
+                get_all_datas('active')    
+                get_all_datas('archive')   
+            }
+        })
+    }
+
+    const fullDelete = async (id) => {
+        axios.delete(`/api/header/${id}`).then((res) => {
+            const data = res.data.data;
+            get_all_datas('active')    
+            get_all_datas('archive') 
+        })
+    }
+
+</script>

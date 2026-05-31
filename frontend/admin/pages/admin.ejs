@@ -1,0 +1,81 @@
+
+<div class="main__items">
+
+
+    <h1 style="text-align: center;" class="mt-2">Admins</h1>
+    
+    <!-- Jadval -->
+    <div class="row col-md-12 mt-2" style="padding: 20px 110px;">
+        <div class="col-md-8">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr class="table-dark">
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th style="width: 15%;" >Created At</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody class="SET-TABLE">
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<script src="/assets/js/axios.min.js"></script>
+<script src="/assets/js/jquery.min.js"></script>
+<script>
+
+    // HTML ga malumotlarni joylash
+    const set_table_data = async (Arrays, Classes) => {
+        const result = Arrays; // [ {}, {}, {}, ... ]
+        const setTable = $(Classes)
+        await setTable.html("")
+        result.forEach((item, index) => {
+            setTable.append(`
+                    <tr>
+                        <td>${index += 1}</td>
+                        <td>${item.name}</td>
+                        <td>${item.phone}</td>
+                        <td>${item.email}</td>
+                        <td>
+                            <span style="font-weight: 500;" class="badge text-bg-success">Active</span>
+                        </td>
+                        <td>${new Date(item.createdAt).toLocaleDateString('en-GB')}</td>
+                        <td>
+                            <button style="font-weight: 500;" class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                `)
+        });
+    }
+
+    // 1.Faol va Arxiv ma'lumotlarni olish
+    const get_all_datas = async (...STATUS) => {
+        axios.get("/api/admin/all", {
+            params: {
+                status: STATUS,
+            }
+        }).then(async (res) => {
+            set_table_data(res.data.data, '.SET-TABLE')
+        })
+    }
+    get_all_datas('active', 'archive')
+
+
+
+   
+
+
+
+
+</script>

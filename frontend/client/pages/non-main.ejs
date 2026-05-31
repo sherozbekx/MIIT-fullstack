@@ -1,0 +1,1075 @@
+<div class="flex flex-col py-10 main-container m_cace">
+    <section class="py-5 main-section">
+        <div class="section_w-right">
+            <div class="shrink">
+                <div class="container_paper paper py-10 px-20">
+                    <div class="path flex">
+                        <div class="flex flex-wrap gap-y-2 gap-x-0 align-center" id="pathBox">
+                            <a class="breadcrumbs active" href="/">
+                                <%= t.homePage %>
+                            </a>
+                            <div class="breadcrumbs-separator">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24" class="breadcrumb_icon__tdM_m"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15 7-5 5 5 5"></path>
+                                </svg>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <h2 class="uppercase pt-2 pb-4 content-title" id="pageHeaderName"></h2>
+                    <div class="main__content flex">
+                        <div>
+                            <div id="dataIDCreate">
+                                <div id="imgSet">
+                                </div>
+                            </div>
+                            <div class="data-zoomable">
+
+                                <div class="body_body flex">
+                                    <div id="text_area">
+                                        
+                                    </div>
+                                    <div class="bdy-links flex flex-col" id="updatedATDATA" style="gap: var(--mantine-spacing-sm);">
+                                        <div class="lnr flex" style="justify-content: space-between;">
+                                            <div class="box flex" style="gap: var(--mantine-spacing-md); align-items: center;">
+                                                <a target="_blank" href="" class="social-media-icon" data-="facebook">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="18" height="18" viewBox="0 0 470.513 470.513"><path d="M271.521 154.17v-40.541c0-6.086.28-10.8.849-14.13.567-3.335 1.857-6.615 3.859-9.853q3-4.852 9.706-6.708 6.712-1.859 17.85-1.858h40.539V0h-64.809q-56.249 0-80.803 26.691c-16.368 17.798-24.551 44.014-24.551 78.658v48.82h-48.542v81.086h48.539v235.256h97.362V235.256h64.805l8.566-81.086z"></path></svg>
+                                                </a>
+                                                <a target="_blank" href="" class="social-media-icon" data-="twitter">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="18" height="18" viewBox="0 0 24 24"><path d="M14.095 10.316 22.286 1h-1.94L13.23 9.088 7.551 1H1l8.59 12.231L1 23h1.94l7.51-8.543L16.45 23H23zm-2.658 3.022-.872-1.218L3.64 2.432h2.98l5.59 7.821.869 1.219 7.265 10.166h-2.982z"></path></svg>
+                                                </a>
+                                                <a target="_blank" href="" class="social-media-icon" data-="instagram">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="22" height="22" fill="current" viewBox="0 0 24 24"><path d="M19.2 4.4 2.9 10.7c-1.1.4-1.1 1.1-.2 1.3l4.1 1.3 1.6 4.8c.2.5.1.7.6.7.4 0 .6-.2.8-.4l2-2 4.2 3.1c.8.4 1.3.2 1.5-.7l2.8-13.1c.3-1.1-.4-1.7-1.1-1.3m-2.1 3-7.8 7.1-.3 3.3L7.4 13l9.2-5.8c.4-.3.8-.1.5.2"></path><path d="M0 0h24v24H0z" style="fill:none"></path></svg>    
+                                                </a>
+                                            </div>
+                                            <div class="box flex" id="viewCount" style="gap: var(--mantine-spacing-md); align-items: center;">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-menu flex" style="top: calc(224.796875px + var(--gap));max-height: calc(100vh -(224.796875px + var(--gap-md)));gap: var(--mantine-spacing-md);flex-direction: column;">
+                <div class="r-menu_container"aria-hidden="false">
+                    <div class="flex flex-col" id="rightHeaders_nav">                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script src="/assets/js/axios.min.js"></script>
+<script src="/assets/js/jquery.min.js"></script>
+
+<script>
+    var lang = "<%= t.lang %>";
+
+    const set_path = async (path) => {
+        const pageName = window.location.pathname.split("/page/")[1];
+        const namePage = window.location.pathname.split("/")[1];
+        const pathBox = $('#pathBox');
+        if(pageNameSec == undefined || !pageNameSec) {
+            if(namePage == "staff") {
+                var response = await axios.get(`/api/department/all`, { params: { status: "active" } });
+            } 
+            else if (namePage == "region") {
+                var responseHeader = await axios.get(`/api/region/all`, { params: { status: "active" } });
+                var response = await axios.get(`/api/department/all`, { params: { status: "active" } });
+            }
+            else if (namePage == "news" || namePage == "meeting" || namePage == "events") {
+                var responseHeader = await axios.get(`/api/news/all`, { params: { status: "active" } });
+                var response = await axios.get(`/api/header/search`, { params: { status: "active", link: `/${namePage}` } });                
+            }
+            else if (namePage == "contacts") {
+                var responseHeader = await axios.get(`/api/contacts/all`, { params: { status: "active" } });
+                var response = await axios.get(`/api/header/all`, { params: { status: "active" } });
+            }
+            else {
+                var response = await axios.get(`/api/${namePage == "sections" ? `section` : `${namePage}`}/all`, { params: { status: "active" } });
+            }
+            const result = response.data.data            
+
+            if (namePage == "news" || namePage == "meeting" || namePage == "events") {    
+                var gmenuID = result.map((item) => item?.gmenu); 
+                var headerName = result.map((item) => item?.name);           
+            
+                var staffHeaderIDs = result
+                    .filter(item => item?.link === `/${namePage}`)
+                    .map(item => item?._id);
+                var staffHeaderNames = result
+                    .filter(item => item?.link === `/${namePage}`)
+                    .map(item => item?.name);
+            } else if (namePage == "contacts") {
+                var gmenuID = result.map((item) => item?.gmenu._id); 
+                var headerName = result.map((item) => item?.name);           
+            
+                var staffHeaderIDs = result
+                    .filter(item => item?.link === `/${namePage}`)
+                    .map(item => item?._id);
+                var staffHeaderNames = result
+                    .filter(item => item?.link === `/${namePage}`)
+                    .map(item => item?.name);
+            }
+            else {
+                var gmenuID = result.map((item) => item.header?.gmenu); 
+                var headerName = result.map((item) => item.header?.name);           
+            
+                var staffHeaderIDs = result
+                    .filter(item => item.header?.link === `/${namePage}`)
+                    .map(item => item.header?._id);
+                var staffHeaderNames = result
+                    .filter(item => item.header?.link === `/${namePage}`)
+                    .map(item => item.header?.name);
+            }
+            
+            document.getElementById("pageHeaderName").innerHTML = `${staffHeaderNames[0][lang]}`
+            const responseGmenu = await axios.get(`/api/gmenu/${gmenuID[0]}`, { params: { status: "active" } });
+            const pathGmenu = responseGmenu.data.data
+            
+            if(path == 'full_path') {
+                pathBox.append(`
+                    <a class="breadcrumbs active" href="/api/gmenu/${gmenuID}">
+                        ${pathGmenu.name[lang]}
+                    </a>
+                    <div class="breadcrumbs-separator">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24" class="breadcrumb_icon__tdM_m"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15 7-5 5 5 5"></path>
+                        </svg>
+                    </div>
+                    <a class="breadcrumbs" >
+                        ${staffHeaderNames[0][lang]}
+                    </a>
+                `)
+            }
+            if(path == 'main') {
+                pathBox.append(`
+                    <a class="breadcrumbs">
+                        ${headerName[lang]}
+                    </a>
+                `)
+            }
+        } 
+        else {
+            if(namePage == "page") {
+                var response = await axios.get("/api/pages", { params: { params_name: pageName, status: "active" } });
+            }
+            else {
+                var response = await axios.get("/api/sections", { params: { params_name: pageNameSec, status: "active" } });
+            }
+            const gmenuID = response.data.data.header.gmenu
+            const responseGmenu = await axios.get(`/api/gmenu/${gmenuID}`, { params: { status: "active" } });
+            const pathGmenu = responseGmenu.data.data
+            if(path == 'full_path') {
+                pathBox.append(`
+                    <a class="breadcrumbs active" href="/api/gmenu/${gmenuID}">
+                        ${pathGmenu.name[lang]}
+                    </a>
+                    <div class="breadcrumbs-separator">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24" class="breadcrumb_icon__tdM_m"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15 7-5 5 5 5"></path>
+                        </svg>
+                    </div>
+                    <a class="breadcrumbs" >
+                        ${response.data.data.header.name[lang]}
+                    </a>
+                `)
+            }
+            if(path == 'main') {
+                pathBox.append(`
+                    <a class="breadcrumbs">
+                        ${pathGmenu.name[lang]}
+                    </a>
+                `)
+            }
+        }
+    }
+</script>
+<script>
+    const pageName = window.location.pathname.split("/page/")[1];
+    const match = window.location.pathname.match(/\/page\/([^/]+)|\/sections\/([^/]+)/);
+    const pageNameSec = match ? (match[0]) : null;
+
+    console.log(pageNameSec);
+    
+    
+    const namePage = window.location.pathname.split('/')[1];
+    set_path('full_path')
+    const set_headers_datas = async (header, headerID, pageGH, staff) => {
+            if (!header ) {
+                console.error("Invalid data:", { header, pageGH });
+                return;
+            }
+            const setTable = $("#rightHeaders_nav");
+            await setTable.html("");
+
+            const headerIDs = pageGH.map((item) => item.header?._id).filter(Boolean);
+
+            const pageNames = pageGH.map((item) => item.params_name).filter(Boolean);
+            console.log(pageNames);
+            
+            
+            if(staff) {
+                if(namePage == "news" || namePage == "meeting" || namePage == "events" || namePage == "contacts") {
+                    var staffHeaderIDs = staff
+                        .filter(item => item?.link === `/${namePage}`)
+                        .map(item => item?._id);
+                    var staffHeaderNames = staff
+                        .filter(item => item?.link === `/${namePage}`)
+                        .map(item => item?.name);
+                } 
+                else {
+                    var staffHeaderIDs = staff
+                        .filter(item => item.header?.link === `/${namePage}`)
+                        .map(item => item.header?._id);
+                    var staffHeaderNames = staff
+                        .filter(item => item.header?.link === `/${namePage}`)
+                       .map(item => item.header?.name);
+                }
+                header.forEach((item) => {
+                    
+                    const isActive = staffHeaderIDs.includes(item._id);
+                    
+                    const isHeaderMatched = headerIDs.includes(item._id);
+                    const matchedPageName = isHeaderMatched ? pageNames[headerIDs.indexOf(item._id)] : "";
+                    
+
+                    setTable.append(`
+                        ${item.name[lang] == "" ? `` : `
+                            ${!item.link ? `
+                               <a  href="/page/${matchedPageName}" id="pathRmenu" class="right-menu_item ${isActive ? `active` : ``}">
+                                    <span class="shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15 7-5 5 5 5"></path>
+                                        </svg>
+                                    </span>
+                                    <span id="header_text">${item.name[lang]}</span>
+                                
+                                </a>
+                               ` : `
+                               <a ${item.link.startsWith('https://') ? `target="_blank"` : `` } ${isActive  ? "" : `href="${item.link ? `${item.link}` : ``}"`}  id="pathRmenu" class="right-menu_item ${isActive ? "active" : ""}">
+                                    <span class="shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15 7-5 5 5 5"></path>
+                                        </svg>
+                                    </span>
+                                    <span id="header_text">${item.name[lang]}</span>
+                                </a>
+                           `}
+                        `}
+                        
+                    `);
+                });
+            } 
+            else {
+                header.forEach( async (item) => {
+
+                    if(namePage == "page") {
+                        var response = await axios.get("/api/pages", { params: { params_name: pageName, status: "active" } });
+                    }
+                    else {
+                        var response = await axios.get("/api/sections", { params: { params_name: pageNameSec, status: "active" } });
+                    }
+                    const headerIdOfPage = response.data.data.header._id;                    
+                    const isHeaderMatched = headerIDs.includes(item._id);
+                    const matchedPageName = isHeaderMatched ? pageNames[headerIDs.indexOf(item._id)] : "";
+                    if(namePage == "page") {
+                        setTable.append(`
+                            ${item.name[lang] == "" ? ``
+                            : `
+                               ${!item.link ? `
+                               <a ${headerIdOfPage === item._id ? "" : `href="/page/${matchedPageName}"`}  id="pathRmenu" class="right-menu_item ${headerIdOfPage === item._id ? "active" : ""}">
+                                    <span class="shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15 7-5 5 5 5"></path>
+                                        </svg>
+                                    </span>
+                                    <span id="header_text">${item.name[lang]}</span>
+                                </a>
+                               ` : `
+                               <a ${item.link.startsWith('https://') ? `target="_blank"` : `` } href="${item.link ? `${item.link}` : ``}" id="pathRmenu" class="right-menu_item ${headerIdOfPage === item._id ? "active" : ""}">
+                                    <span class="shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15 7-5 5 5 5"></path>
+                                        </svg>
+                                    </span>
+                                    <span id="header_text">${item.name[lang]}</span>
+
+                                </a>
+                               `} 
+                            `}
+                        `);
+                    }
+                    else {
+                        setTable.append(`
+                            ${item.name[lang] == "" ? ``
+                            : `
+                               ${!item.link ? `
+                               <a ${headerIdOfPage === item._id ? "" : `href="/page/${matchedPageName}"`}  id="pathRmenu" class="right-menu_item ${headerIdOfPage === item._id ? "active" : ""}">
+                                    <span class="shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15 7-5 5 5 5"></path>
+                                        </svg>
+                                    </span>
+                                    <span id="header_text">${item.name[lang]}</span>
+                                </a>
+                               ` : `
+                               <a ${item.link.startsWith('https://') ? `target="_blank"` : `` } href="${item.link ? `${item.link}` : ``}" id="pathRmenu" class="right-menu_item ${headerIdOfPage === item._id ? "active" : ""}">
+                                    <span class="shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15 7-5 5 5 5"></path>
+                                        </svg>
+                                    </span>
+                                    <span id="header_text">${item.name[lang]}</span>
+
+                                </a>
+                               `} 
+                            `}
+                        `);
+                    }
+
+                    
+                    
+                });
+            }
+            
+        };
+    const set_content = async (data) => {
+            document.getElementById('viewCount').innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="current"><path d="M15 12a3 3 0 1 1-5.943-.581c1.474.541 2.927-.882 2.405-2.371Q11.723 9.002 12 9a3 3 0 0 1 3 3m-2.985-7C4.446 5 0 11.551 0 11.551S4.835 19 12.015 19C19.748 19 24 11.551 24 11.551S19.709 5 12.015 5M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10"></path></svg>
+                <p>${data.views}</p>
+            `
+            const dataUpdate =  document.createElement('p')
+                dataUpdate.setAttribute("id","updatedAt")
+                dataUpdate.setAttribute('class',"content_updatedAt")
+            const updateBOX = document.getElementById('updatedATDATA')
+                updateBOX.appendChild(dataUpdate)
+            const adjustedDate = new Date(data.createdAt);
+            adjustedDate.setHours(adjustedDate.getHours() + 5);
+            const formattedDate = adjustedDate.toISOString().replace("T", " ").split(".")[0];
+            const updatedAtBox = document.getElementById('updatedAt').innerHTML = `<%= t.latestupdate %> : ${formattedDate}`
+            const HeaderName = document.getElementById('pageHeaderName');
+            if(data.name.uz || data.name.ru || data.name.eng) {
+                HeaderName.innerHTML = `${data.name[lang]}`
+            }else {
+                HeaderName.innerHTML = `${data.header.name[lang]}`
+            }
+
+            if (data.images && Array.isArray(data.images) && data.images.length > 0) {
+                const setImg = $('#imgSet');
+                await setImg.html(""); // Clear previous images
+
+                if (Array.isArray(data.images) && data.images.length > 1) {
+                    const arr = data.images
+                    arr.forEach((item, index) => {
+                        setImg.append(`
+                            <img src="${data.images[index += 0]}" alt="Image" class="imgData" style="color: transparent; max-width: 100%; margin-bottom: 1rem;">
+                        `);
+
+                    })
+                } else {
+                    setImg.append(`
+                        <img src="${data.images[0]}" alt="Image" class="imgData" style="color: transparent; max-width: 100%;">
+                    `);
+                }
+            }
+
+            const result = data;
+            const setTable = $("#text_area");
+            await setTable.html("");        
+
+
+            setTable.append(`
+                ${result.textarea[lang]}
+            `)
+            // document.querySelectorAll("#text_area p").forEach(p => p.removeAttribute("style"));
+            // document.querySelectorAll("#text_area span").forEach(p => p.removeAttribute("style"));
+            // document.querySelectorAll("#text_area br").forEach(p => p.removeAttribute("style"));
+            // document.querySelectorAll("#text_area a").forEach(p => p.removeAttribute("style"));
+            // document.querySelectorAll("#text_area p span").forEach(p => p.removeAttribute("style")); 
+            // document.querySelectorAll("#text_area p span br").forEach(p => p.removeAttribute("style"));
+            // document.querySelectorAll("#text_area p span a").forEach(p => p.removeAttribute("style"));
+        }
+    const set_contentS = async (data) => {
+        const result = data;
+        
+        const setTable = $("#text_area");
+        await setTable.html("");
+        setTable.append(`
+            <div class="flex flex-col gap-5" id="content">
+                
+            </div>
+        `)
+        const content = $('#content')
+        await content.html("")
+
+        if(result.length >= 0) {
+            setTable.append(`
+            <div style="display: grid; justify-items: center; align-content: center; width: 100%; height: 120px">
+                        <div>
+                            <svg width="64" height="41" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">
+                                <title>No data</title>
+                                <g transform="translate(0 1)" fill="none" fill-rule="evenodd">
+                                    <ellipse fill="#f5f5f5" cx="32" cy="33" rx="32" ry="7"></ellipse>
+                                    <g fill-rule="nonzero" stroke="#d9d9d9">
+                                        <path
+                                           d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z">
+                                        </path>
+                                        <path
+                                            d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                            fill="#fafafa"></path>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="mt-2" style="color: rgba(0, 0, 0, 0.45)">No data</div>
+                    </div>
+                    `)
+        }
+
+
+        result.forEach( async (item)=> {
+            content.append(`
+                <a href="/section/view/${item.params_number}" class="flex items-center px-6 py-2 gap-5 h-full basis-20 link-box_box">
+                    <span class="link-box_line"></span>
+                    <div class="grow flex" style="gap: var(--mantine-spacing-xs); justify-content: center; flex-direction: column;">
+                        <p class="uppercase only-2-lines text__m" style="padding-top: 0 !important">
+                            ${item.name[lang]}
+                        </p>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="24" height="24" viewBox="0 0 32 32" class="link-box_box__icon"><g fill="current"><path d="M16 0C7.163 0 0 7.163 0 16s7.163 16 16 16 16-7.164 16-16S24.836 0 16 0m0 30C8.28 30 2 23.72 2 16S8.28 1.969 16 1.969 30 8.28 30 16s-6.28 14-14 14"></path><path d="M13.808 8.271a.994.994 0 0 0-1.414 0 1.017 1.017 0 0 0 0 1.429l6.195 6.285-6.196 6.285a1.017 1.017 0 0 0 0 1.429.994.994 0 0 0 1.414 0l6.9-6.999a1.037 1.037 0 0 0 0-1.429z"></path></g></svg>
+                </a>
+            `)
+        });
+    }
+    
+    const get_all_datas = async () => {
+        try {
+            
+            const pageSecSplitted = pageNameSec.split('/')[1]            
+            if (pageSecSplitted == "page") {
+                const response = await axios.get("/api/pages", { params: { params_name: pageName, status: "active" } });
+                const pathLink = response.data.data.params_name
+                set_content(response.data.data)
+
+                
+                
+                const gmenuID = response.data.data.header.gmenu
+                
+                const responseGmenu = await axios.get(`/api/gmenu/${gmenuID}`, { params: { status: "active" } });
+                const pathGmenu = responseGmenu.data.data
+                
+                const headerID = response.data.data.header._id
+                
+                const headers = await axios.get("/api/header/search", { params: { gmenu: gmenuID, status: 'active' }})
+                const pagesResponses = await axios.get("/api/pages/all", { params: { status: 'active' } });
+                
+                await set_headers_datas(headers.data.data, headerID, pagesResponses.data.data)
+            }else {
+                const response = await axios.get("/api/sections", { params: { params_name: pageNameSec, status: "active" } });
+                const responseSec = await axios.get("/api/section/view/search", { params: { section: response.data.data._id, status: "active" } });
+                const pathLink = response.data.data
+                console.log(response.data.data);              
+                console.log(responseSec.data.data)
+
+                set_contentS(responseSec.data.data)
+                
+                
+                const gmenuID = response.data.data.header.gmenu
+                
+                const responseGmenu = await axios.get(`/api/gmenu/${gmenuID}`, { params: { status: "active" } });
+                const pathGmenu = responseGmenu.data.data
+                
+                
+                const headerID = response.data.data.header._id
+                
+                const headers = await axios.get("/api/header/search", { params: { gmenu: gmenuID, status: 'active' }})
+                
+                const pagesResponses = await axios.get("/api/pages/all", { params: { status: 'active' } });
+                const sectionsResponse = await axios.get("/api/section/all", { params: { status: 'active' } });
+                const combinedData = [...pagesResponses.data.data, ...sectionsResponse.data.data];
+                
+                await set_headers_datas(headers.data.data, headerID, combinedData)
+            }
+            
+
+        } catch (error) {
+            console.log(error);
+        }
+    }; 
+    if(pageNameSec == undefined || !pageNameSec) {
+        const get__datas = async (nameOfPage) => {
+            try {
+                if(namePage == "staff") {
+                    var response = await axios.get(`/api/department/all`, { params: { status: "active" } });
+                } 
+                else if (namePage == "region") {
+                    var responseHeader = await axios.get(`/api/region/all`, { params: { status: "active" } });
+                    var response = await axios.get(`/api/department/all`, { params: { status: "active" } });
+                }
+                else if (namePage == "news" || namePage == "meeting" || namePage == "events") {
+                    var responseHeader = await axios.get(`/api/news/all`, { params: { status: "active" } });
+                    var response = await axios.get(`/api/header/search`, { params: { status: "active", link: `/${namePage}` } });
+                } else if (namePage == "contacts") {
+                    var responseHeader = await axios.get(`/api/contacts/all`, { params: { status: "active" } });
+                    var response = await axios.get(`/api/header/search`, { params: { status: "active", link: `/${namePage}` } });
+                }
+                else {
+                    var response = await axios.get(`/api/${namePage}/all`, { params: { status: "active" } });
+                }
+            
+                const result = response.data.data
+                // console.log(result);
+                
+
+                if (namePage == "news" || namePage == "meeting" || namePage == "events" || namePage == "contacts") {
+                    var gmenuID = result.map((item) => item?.gmenu); 
+                    var headerName = result.map((item) => item?.name);           
+                    
+                    var staffHeaderIDs = result
+                        .filter(item => item?.link === `/${namePage}`)
+                        .map(item => item?._id);
+                    var staffHeaderNames = result
+                        .filter(item => item?.link === `/${namePage}`)
+                        .map(item => item?.name);
+                    document.getElementById("pageHeaderName").innerHTML = `${staffHeaderNames[0][lang]}`
+                } else {
+                    var gmenuID = result.map((item) => item.header?.gmenu); 
+                    var headerName = result.map((item) => item.header?.name);           
+                    
+                    var staffHeaderIDs = result
+                        .filter(item => item.header?.link === `/${namePage}`)
+                        .map(item => item.header?._id);
+                    var staffHeaderNames = result
+                        .filter(item => item.header?.link === `/${namePage}`)
+                        .map(item => item.header?.name);
+                    document.getElementById("pageHeaderName").innerHTML = `${staffHeaderNames[0][lang]}`
+                }
+                
+                
+
+                const headerId = result.map((item) => item.header?._id);
+    
+                const responseGmenu = await axios.get(`/api/gmenu/${gmenuID[0]}`, { params: { status: "active" } });
+                const pathGmenu = responseGmenu.data.data
+
+                const headerID = headerId[0]
+                
+
+                const headers = await axios.get("/api/header/search", { params: { gmenu: gmenuID[0], status: 'active' }})
+                const pagesResponses = await axios.get("/api/pages/all", { params: { status: 'active' } });
+
+                await set_headers_datas(headers.data.data, headerID, pagesResponses.data.data, result)
+
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        get__datas(namePage)
+        var dayTranslations = {
+                uz: {
+                    "": "",
+                    "Monday": "Dushanba",
+                    "Tuesday": "Seshanba",
+                    "Wednesday": "Chorshanba",
+                    "Thursday": "Payshanba",
+                    "Friday": "Juma",
+                    "Saturday": "Shanba",
+                    "Sunday": "Yakshanba"
+                },
+                ru: {
+                    "": "",
+                    "Monday": "Понедельник",
+                    "Tuesday": "Вторник",
+                    "Wednesday": "Среда",
+                    "Thursday": "Четверг",
+                    "Friday": "Пятница",
+                    "Saturday": "Суббота",
+                    "Sunday": "Воскресенье"
+                },
+                eng: {
+                    "": "",
+                    "Monday": "Monday",
+                    "Tuesday": "Tuesday",
+                    "Wednesday": "Wednesday",
+                    "Thursday": "Thursday",
+                    "Friday": "Friday",
+                    "Saturday": "Saturday",
+                    "Sunday": "Sunday"
+                }
+            };
+        const set_staff_content = async (guidesData) => {
+            const myCreatedElement = document.createElement("div");
+                myCreatedElement.setAttribute("id","guide");
+                myCreatedElement.setAttribute("class","flex flex-col gap-3");
+            const creator = document.getElementById('text_area');
+                creator.appendChild(myCreatedElement);
+            const set_data = $('#guide')
+            set_data.html('')
+
+            
+
+                guidesData.forEach((item)=> {
+                    item.time = dayTranslations[lang][item.time];
+                    set_data.append(`
+                        <div class="container-guides" style="display: flex; flex-direction: column; gap: .75rem; max-width: 1020px">
+                            <div class="boxy" style="padding: 2rem; width: 100%; border: 1px solid #bcbcbc;">
+                                <div class="temp" style="grid-template-columns: 1fr 2fr 30%; display: grid; align-items: center;gap: 2rem;">
+                                    <div class="img" style="position: relative; width: 11.875rem; height: 11.875rem; background-color: #e5e8eb; border-radius: 50%; overflow: hidden;">
+                                        <img src="${item.image}" style="width: 190px; height: 190px; object-fit: cover;" alt="EMPLOYEE">
+                                    </div>
+                                    <div class="text" style="flex-direction: column; display: flex;">
+                                        <h3 style="font-size: 1.5rem; font-weight: 600;">${item.name[lang]}</h3>
+                                        <p style="font-size: 1rem; max-width: 31.25rem; padding-top: 0.5rem;">${item.description[lang]}</p>
+                                    </div>
+                                    <div class="info" style="gap: 0.5rem; flex-direction: column; display: flex;">
+                                        
+                                        ${item.phone == "" || !item.phone ? `` : `
+                                            <a target="_blank" href="tel:${item.phone}" style="display: flex; align-items: center; gap: .625rem;"> 
+                                                <svg style="width: 20px; flex-shrink: 0; fill: #043b87;" xmlns="http://www.w3.org/2000/svg" data-name="483947" viewBox="0 0 17.2 17.2"><path d="M15.82 11.29a9.8 9.8 0 0 1-3.067-.488 1.4 1.4 0 0 0-1.363.287l-1.934 1.46a10.7 10.7 0 0 1-4.805-4.8l1.416-1.888a1.39 1.39 0 0 0 .342-1.409 9.8 9.8 0 0 1-.49-3.072A1.38 1.38 0 0 0 4.539 0H1.38A1.38 1.38 0 0 0 0 1.38 15.84 15.84 0 0 0 15.82 17.2a1.38 1.38 0 0 0 1.38-1.38v-3.15a1.38 1.38 0 0 0-1.38-1.38" data-name="telephone"></path></svg>
+                                                <i style="font-size: 1rem; color: #000; max-width: 20rem;">
+                                                    ${item.phone}
+                                                </i>
+                                            </a>
+                                        `}
+                                        ${item.email == "" || !item.email ? `` : `
+                                            <a target="_blank" href="mailto:${item.email}" style="display: flex; align-items: center; gap: .625rem;">
+                                                <svg style="width: 24px; flex-shrink: 0; fill: #043b87;" xmlns="http://www.w3.org/2000/svg" width="23.154" height="16.28"><path d="M2.036 16.28a2 2 0 0 1-.872-.2l7.023-6.977.993.994a3.4 3.4 0 0 0 4.795 0l.994-.994 7.023 6.977a2 2 0 0 1-.872.2Zm13.892-8.139 7.023-6.977a2 2 0 0 1 .2.872v12.211a2 2 0 0 1-.2.872ZM0 14.246V2.035a2 2 0 0 1 .206-.872L7.227 8.14.206 15.117a2 2 0 0 1-.204-.87Zm10.14-5.112L1.164.202a2.04 2.04 0 0 1 .872-.2h19.085a2.05 2.05 0 0 1 .872.2l-8.976 8.932a2.03 2.03 0 0 1-1.439.595 2.03 2.03 0 0 1-1.438-.594Z" data-name="message"></path></svg>
+                                                <i style="font-size: 1rem; color: #000; max-width: 20rem;">
+                                                    ${item.email}
+                                                </i>
+                                            </a>
+                                        `}
+                                        ${item.site == "https://" || item.site == "" ? `` : `
+                                            <a target="_blank" href="${item.site}" style="display: flex; align-items: center; gap: .625rem;">
+                                                <svg style="width: 24px; flex-shrink: 0; fill: #043b87;" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path fill="#013d8c" d="M12 0a12 12 0 1 0 12 12A12 12 0 0 0 12 0m8.647 7h-3.221a19.7 19.7 0 0 0-2.821-4.644A10.03 10.03 0 0 1 20.647 7M16.5 12a10.2 10.2 0 0 1-.476 3H7.976a10.2 10.2 0 0 1-.476-3 10.2 10.2 0 0 1 .476-3h8.048a10.2 10.2 0 0 1 .476 3m-7.722 5h6.444A19.6 19.6 0 0 1 12 21.588 19.6 19.6 0 0 1 8.778 17m0-10A19.6 19.6 0 0 1 12 2.412 19.6 19.6 0 0 1 15.222 7ZM9.4 2.356A19.7 19.7 0 0 0 6.574 7H3.353A10.03 10.03 0 0 1 9.4 2.356M2.461 9H5.9a12 12 0 0 0-.4 3 12 12 0 0 0 .4 3H2.461a10 10 0 0 1 0-6m.892 8h3.221A19.7 19.7 0 0 0 9.4 21.644 10.03 10.03 0 0 1 3.353 17M14.6 21.644A19.7 19.7 0 0 0 17.426 17h3.221a10.03 10.03 0 0 1-6.042 4.644ZM21.539 15H18.1a12 12 0 0 0 .4-3 12 12 0 0 0-.4-3h3.437a10 10 0 0 1 0 6Z"></path></svg>
+                                                <i style="font-size: 1rem; color: #000; max-width: 20rem;">
+                                                    ${item.site}
+                                                </i>
+                                            </a>
+                                        `}
+                                        ${item.time == "" ? `` : `
+                                            <div style="display: flex; align-items: center; gap: .625rem;"> 
+                                                <svg style="width: 24px; flex-shrink: 0; fill: #043b87;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.6 20.4C1.3 18.2 0 15.2.1 12c0-3.2 1.3-6.2 3.5-8.4C5.8 1.3 8.8 0 12 .1c3.2 0 6.2 1.3 8.4 3.5s3.5 5.3 3.5 8.4c0 3.2-1.3 6.2-3.5 8.4s-5.3 3.5-8.4 3.5c-3.2.1-6.2-1.2-8.4-3.5M2.4 12c0 5.3 4.3 9.6 9.6 9.6s9.6-4.3 9.6-9.6-4.3-9.6-9.6-9.6h-.1c-5.3.1-9.5 4.3-9.5 9.6m10.3 7.3c0-.4-.3-.7-.7-.7s-.7.3-.7.7v.9c-4-.3-7.1-3.5-7.4-7.5h.8c.4 0 .7-.3.7-.7s-.3-.7-.7-.7h-.8c.4-3.9 3.4-7 7.3-7.4v.7c0 .4.3.7.7.7s.7-.3.7-.7v-.8c4 .3 7.1 3.4 7.5 7.3h-.8c-.4 0-.7.3-.7.7s.3.7.7.7h.9c-.3 4-3.4 7.2-7.5 7.6zM7.4 7.4c-.3.3-.3.7 0 1l4.1 4.1c.1.1.3.2.5.2s.4-.1.5-.2l2.4-2.4c.3-.3.3-.7 0-1s-.7-.3-1 0L12 11 8.4 7.4c-.1-.2-.3-.2-.5-.2s-.4.1-.5.2" class="clock_svg__st0"></path></svg>
+                                                <i style="font-size: 1rem; color: #000; max-width: 20rem;">
+                                                    <span>${item.time}</span>
+                                                    <span>${item.timeStart}</span>
+                                                    -
+                                                    <span>${item.timeEnd}</span>
+                                                </i>
+                                            </div>
+                                        `}
+                                        
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    `)
+
+                })
+        }
+        const get_all_staff = async () => {
+            try {
+                const resg = await axios.get(`/api/${namePage}/all`, {params: { status: "active" }})
+                const resGuides = resg.data.data
+                set_staff_content(resGuides)
+            }
+            catch(error) {
+                console.log(error.message);
+            }
+        }
+
+        const get_all_department = async () => {
+            try {
+                const resg = await axios.get(`/api/${namePage == "staff" ? `department` : `${namePage}`}/all`, {params: { status: "active" }})
+                const resStaff = await axios.get(`/api/staff/all`, {params: { status: "active" }})
+                const resGuides = resg.data.data
+                const result = resStaff.data.data
+
+                console.log(resGuides);
+                console.log(result);
+                
+                
+                var staffHeaderIDs = resGuides
+                    .filter(item => item.header?.link === `/${namePage}`)
+                    .map(item => item?._id);
+                    
+                var staffRegionIDs = resGuides
+                    .filter(item => item?._id)
+                    .map(item => item?._id);
+                
+                var staffDepartmentID = result
+                    .filter(item => staffHeaderIDs.includes(item.department?._id))
+                    .map(item => item?.department._id);
+
+                var staffRegionID = result
+                    .filter(item => staffRegionIDs.includes(item.address?._id))
+                    .map(item => item?.address._id);
+                
+                    console.log(staffRegionIDs);
+                    console.log(staffRegionID);
+                    
+                var staffDepartmentName = result
+                    .filter(item => staffDepartmentID.includes(item.department?._id))
+                    .map(item => item?.name);
+
+                var staffRegionName = result
+                    .filter(item => staffRegionID.includes(item.address?._id))
+                    .map(item => item?.name);
+
+                const set_department = $('#text_area')
+                set_department.html("")
+                // set_department.attr("style", "--accordion-chevron-size: calc(1.5rem* var(--mantine-scale));")
+                resGuides.forEach((item) => {
+                    if(namePage == "region") {
+                        
+                        var staffName = staffRegionName;
+                        set_department.append(`
+                            ${staffRegionIDs.includes(item._id)  ? `
+                                <div onclick="openMenu('${item._id}')" class="boxMenu" style="background-color: #f9f9f9; transition: var(--transition); width: 100%; display: flex; align-items: center; padding-inline: var(--mantine-spacing-md); opacity: 1; cursor: pointer;">
+                                    <p class='staffHeaderTitle m444512'>
+                                        ${item.name[lang]}
+                                    </p>
+                                    <span class="flex align-center chevron drop-menu" data-drop="${item._id}" style="justify-content: flex-start; transition: transform var(--accordion-transition-duration, .2s)ease; width: var(--accordion-chevron-size, calc(.9375rem* var(--mantine-scale))); min-width: var(--accordion-chevron-size, calc(.9375rem* var(--mantine-scale))); transform: rotate(0deg);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="24" height="24" viewBox="0 0 32 32">
+                                            <path fill="current" d="M24.285 11.284 16 19.571l-8.285-8.288a1.01 1.01 0 1 0-1.429 1.43l8.999 9.002a1.01 1.01 0 0 0 1.428 0l8.999-9.002a1.01 1.01 0 1 0-1.427-1.429"></path>
+                                        </svg>
+                                    </span>    
+                                </div>
+                                <div id="depMenu_${item._id}" class='flex flex-col gap-3 none'>
+                                    <div style="display: grid; justify-items: center; align-content: center; width: 100%; height: 120px">
+                                        <div>
+                                            <svg width="64" height="41" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">
+                                                <title>No data</title>
+                                                <g transform="translate(0 1)" fill="none" fill-rule="evenodd">
+                                                    <ellipse fill="#f5f5f5" cx="32" cy="33" rx="32" ry="7"></ellipse>
+                                                    <g fill-rule="nonzero" stroke="#d9d9d9">
+                                                        <path
+                                                           d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z">
+                                                        </path>
+                                                        <path
+                                                            d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                                            fill="#fafafa"></path>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                        <div class="mt-2" style="color: rgba(0, 0, 0, 0.45)">No data</div>
+                                    </div>   
+                                </div>
+                            ` : ``}
+                        `)
+                    }
+
+                    else {
+                        var staffName = staffDepartmentName;
+                        set_department.append(`
+                            ${staffHeaderIDs.includes(item._id)  ? `
+                                <div onclick="openMenu('${item._id}')" class="boxMenu" style="background-color: #f9f9f9; transition: var(--transition); width: 100%; display: flex; align-items: center; padding-inline: var(--mantine-spacing-md); opacity: 1; cursor: pointer;">
+                                    <p class='staffHeaderTitle m444512'>
+                                        ${item.name[lang]}
+                                    </p>
+                                    <span class="flex align-center chevron drop-menu" data-drop="${item._id}" style="justify-content: flex-start; transition: transform var(--accordion-transition-duration, .2s)ease; width: var(--accordion-chevron-size, calc(.9375rem* var(--mantine-scale))); min-width: var(--accordion-chevron-size, calc(.9375rem* var(--mantine-scale))); transform: rotate(0deg);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="24" height="24" viewBox="0 0 32 32">
+                                            <path fill="current" d="M24.285 11.284 16 19.571l-8.285-8.288a1.01 1.01 0 1 0-1.429 1.43l8.999 9.002a1.01 1.01 0 0 0 1.428 0l8.999-9.002a1.01 1.01 0 1 0-1.427-1.429"></path>
+                                        </svg>
+                                    </span>    
+                                </div>
+                                <div id="depMenu_${item._id}" class="flex flex-col gap-3 none ">
+                                    <div style="display: grid; justify-items: center; align-content: center; width: 100%; height: 120px">
+                                        <div>
+                                            <svg width="64" height="41" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">
+                                                <title>No data</title>
+                                                <g transform="translate(0 1)" fill="none" fill-rule="evenodd">
+                                                    <ellipse fill="#f5f5f5" cx="32" cy="33" rx="32" ry="7"></ellipse>
+                                                    <g fill-rule="nonzero" stroke="#d9d9d9">
+                                                        <path
+                                                           d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z">
+                                                        </path>
+                                                        <path
+                                                            d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                                            fill="#fafafa"></path>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                        <div class="mt-2" style="color: rgba(0, 0, 0, 0.45)">No data</div>
+                                    </div>
+                                </div>
+                            ` : ``}
+                        `)
+                    }                    
+                })
+                
+                if (namePage == "region") {
+                    var getStaffById = await axios.get(`/api/staff/search`, {params: { address: staffRegionID.map(id => `${id}`) }})
+                } else {
+                    var getStaffById = await axios.get(`/api/staff/search`, {params: { department: staffDepartmentID.map(id => `${id}`) }})
+                }
+                const staffById = getStaffById.data.data
+                console.log(getStaffById);
+                
+                if (namePage == "region") {
+                    var selectors = staffRegionID.map(id => `#depMenu_${id}`).join(", "); 
+                    
+                } else {
+                    var selectors = staffDepartmentID.map(id => `#depMenu_${id}`).join(", "); 
+                }
+                      
+                // console.log(selectors);
+                
+                const depMenuSet = $(selectors);
+                depMenuSet.html('')
+
+                staffById.forEach(item => {
+                    item.time = dayTranslations[lang][item.time];
+                
+                    if (namePage == "region") {
+                        var departmentId = item.address;    
+                    } else {
+                        var departmentId = item.department; 
+                    }
+                    let selector = `#depMenu_${departmentId}`;
+                    $(selector).addClass("boxpad boxpav");
+                    if ($(selector).length) {
+                        $(selector).append(`
+                        <div>
+                            
+                            <div class="container-guides" style="display: flex; flex-direction: column; gap: .75rem; max-width: 1020px">
+                                <div class="boxy" style="padding: 2rem; width: 100%; border: 1px solid #bcbcbc;">
+                                    <div class="temp" style="grid-template-columns: 1fr 2fr 30%; display: grid; align-items: center;gap: 2rem;">
+                                        <div class="img" style="position: relative; width: 11.875rem; height: 11.875rem; background-color: #e5e8eb; border-radius: 50%; overflow: hidden;">
+                                            <img src="${item.image}" style="width: 190px; height: 190px; object-fit: cover;" alt="EMPLOYEE">
+                                        </div>
+                                        <div class="text" style="flex-direction: column; display: flex;">
+                                            <h3 style="font-size: 1.5rem; font-weight: 600;">${item.name[lang]}</h3>
+                                            <p style="font-size: 1rem; max-width: 31.25rem; padding-top: 0.5rem;">${item.description[lang]}</p>
+                                        </div>
+                                        <div class="info" style="gap: 0.5rem; flex-direction: column; display: flex;">
+
+                                            ${item.phone == "" || !item.phone ? `` : `
+                                                <a target="_blank" href="tel:${item.phone}" style="display: flex; align-items: center; gap: .625rem;"> 
+                                                    <svg style="width: 20px; flex-shrink: 0; fill: #043b87;" xmlns="http://www.w3.org/2000/svg" data-name="483947" viewBox="0 0 17.2 17.2"><path d="M15.82 11.29a9.8 9.8 0 0 1-3.067-.488 1.4 1.4 0 0 0-1.363.287l-1.934 1.46a10.7 10.7 0 0 1-4.805-4.8l1.416-1.888a1.39 1.39 0 0 0 .342-1.409 9.8 9.8 0 0 1-.49-3.072A1.38 1.38 0 0 0 4.539 0H1.38A1.38 1.38 0 0 0 0 1.38 15.84 15.84 0 0 0 15.82 17.2a1.38 1.38 0 0 0 1.38-1.38v-3.15a1.38 1.38 0 0 0-1.38-1.38" data-name="telephone"></path></svg>
+                                                    <i style="font-size: 1rem; color: #000; max-width: 20rem;">
+                                                        ${item.phone}
+                                                    </i>
+                                                </a>
+                                            `}
+                                            ${item.email == "" || !item.email ? `` : `
+                                                <a target="_blank" href="mailto:${item.email}" style="display: flex; align-items: center; gap: .625rem;">
+                                                    <svg style="width: 24px; flex-shrink: 0; fill: #043b87;" xmlns="http://www.w3.org/2000/svg" width="23.154" height="16.28"><path d="M2.036 16.28a2 2 0 0 1-.872-.2l7.023-6.977.993.994a3.4 3.4 0 0 0 4.795 0l.994-.994 7.023 6.977a2 2 0 0 1-.872.2Zm13.892-8.139 7.023-6.977a2 2 0 0 1 .2.872v12.211a2 2 0 0 1-.2.872ZM0 14.246V2.035a2 2 0 0 1 .206-.872L7.227 8.14.206 15.117a2 2 0 0 1-.204-.87Zm10.14-5.112L1.164.202a2.04 2.04 0 0 1 .872-.2h19.085a2.05 2.05 0 0 1 .872.2l-8.976 8.932a2.03 2.03 0 0 1-1.439.595 2.03 2.03 0 0 1-1.438-.594Z" data-name="message"></path></svg>
+                                                    <i style="font-size: 1rem; color: #000; max-width: 20rem;">
+                                                        ${item.email}
+                                                    </i>
+                                                </a>
+                                            `}
+                                            ${item.site == "https://" || item.site == "" ? `` : `
+                                                <a target="_blank" href="${item.site}" style="display: flex; align-items: center; gap: .625rem;">
+                                                    <svg style="width: 24px; flex-shrink: 0; fill: #043b87;" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path fill="#013d8c" d="M12 0a12 12 0 1 0 12 12A12 12 0 0 0 12 0m8.647 7h-3.221a19.7 19.7 0 0 0-2.821-4.644A10.03 10.03 0 0 1 20.647 7M16.5 12a10.2 10.2 0 0 1-.476 3H7.976a10.2 10.2 0 0 1-.476-3 10.2 10.2 0 0 1 .476-3h8.048a10.2 10.2 0 0 1 .476 3m-7.722 5h6.444A19.6 19.6 0 0 1 12 21.588 19.6 19.6 0 0 1 8.778 17m0-10A19.6 19.6 0 0 1 12 2.412 19.6 19.6 0 0 1 15.222 7ZM9.4 2.356A19.7 19.7 0 0 0 6.574 7H3.353A10.03 10.03 0 0 1 9.4 2.356M2.461 9H5.9a12 12 0 0 0-.4 3 12 12 0 0 0 .4 3H2.461a10 10 0 0 1 0-6m.892 8h3.221A19.7 19.7 0 0 0 9.4 21.644 10.03 10.03 0 0 1 3.353 17M14.6 21.644A19.7 19.7 0 0 0 17.426 17h3.221a10.03 10.03 0 0 1-6.042 4.644ZM21.539 15H18.1a12 12 0 0 0 .4-3 12 12 0 0 0-.4-3h3.437a10 10 0 0 1 0 6Z"></path></svg>
+                                                    <i style="font-size: 1rem; color: #000; max-width: 20rem;">
+                                                        ${item.site}
+                                                    </i>
+                                                </a>
+                                            `}
+                                            ${item.time == "" ? `` : `
+                                                <div style="display: flex; align-items: center; gap: .625rem;"> 
+                                                    <svg style="width: 24px; flex-shrink: 0; fill: #043b87;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.6 20.4C1.3 18.2 0 15.2.1 12c0-3.2 1.3-6.2 3.5-8.4C5.8 1.3 8.8 0 12 .1c3.2 0 6.2 1.3 8.4 3.5s3.5 5.3 3.5 8.4c0 3.2-1.3 6.2-3.5 8.4s-5.3 3.5-8.4 3.5c-3.2.1-6.2-1.2-8.4-3.5M2.4 12c0 5.3 4.3 9.6 9.6 9.6s9.6-4.3 9.6-9.6-4.3-9.6-9.6-9.6h-.1c-5.3.1-9.5 4.3-9.5 9.6m10.3 7.3c0-.4-.3-.7-.7-.7s-.7.3-.7.7v.9c-4-.3-7.1-3.5-7.4-7.5h.8c.4 0 .7-.3.7-.7s-.3-.7-.7-.7h-.8c.4-3.9 3.4-7 7.3-7.4v.7c0 .4.3.7.7.7s.7-.3.7-.7v-.8c4 .3 7.1 3.4 7.5 7.3h-.8c-.4 0-.7.3-.7.7s.3.7.7.7h.9c-.3 4-3.4 7.2-7.5 7.6zM7.4 7.4c-.3.3-.3.7 0 1l4.1 4.1c.1.1.3.2.5.2s.4-.1.5-.2l2.4-2.4c.3-.3.3-.7 0-1s-.7-.3-1 0L12 11 8.4 7.4c-.1-.2-.3-.2-.5-.2s-.4.1-.5.2" class="clock_svg__st0"></path></svg>
+                                                    <i style="font-size: 1rem; color: #000; max-width: 20rem;">
+                                                        <span>${item.time}</span>
+                                                        <span>${item.timeStart}</span>
+                                                        -
+                                                        <span>${item.timeEnd}</span>
+                                                    </i>
+                                                </div>
+                                            `}
+                                            
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        `);
+                    } else {
+                        console.warn(`Element not found: ${selector}`);
+                    }
+                });
+
+            }
+            catch(error) {
+                console.log(error);
+            }
+        }
+        
+        const get_contacts = async () => {
+            try {
+                const response = await axios.get(`/api/contacts/all`, {params: { status: "active" }})
+                const responseContacts = response.data.data
+                console.log(responseContacts);
+
+                const set_data = $('#text_area')
+                    set_data.html('')
+                    responseContacts.forEach((item) => {
+                        set_data.append(`
+                            <table style="--table-horizontal-spacing: var(--mantine-spacing-md); --table-vertical-spacing: var(--mantine-spacing-md);" class="table">
+                                <tbody>
+                                    <tr>
+                                        <td  class="td-pad">
+                                            <h3>Telephone</h3>
+                                        </td>
+                                        <td  class="td-pad">
+                                            <a href="tel:${item.phone}">${item.phone}</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td  class="td-pad">
+                                            <h3>Hotline</h3>
+                                        </td>
+                                        <td  class="td-pad">
+                                            <a href="tel:${item.hotphone}">${item.hotphone}</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td  class="td-pad">
+                                            <h3>Website</h3>
+                                        </td>
+                                        <td  class="td-pad">
+                                            <a target="_blank" href="${item.website}">
+                                                ${item.website}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td  class="td-pad">
+                                            <h3>E-mail</h3>
+                                        </td>
+                                        <td class="td-pad">
+                                            <a href="mailto:${item.email}">${item.email}</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td  class="td-pad">
+                                            <h3>
+                                                Social networks
+                                            </h3>
+                                        </td>
+                                        <td  class="td-pad">
+                                            ${!item.socialNet ? `` : `
+                                            
+                                            <div class="flex align-center" style="gap: var(--mantine-spacing-sm);">
+                                                <a target="_blank" class="contactsIcon" aria-label="twitter" href="https://${item.socialNet.x}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="18" height="18" viewBox="0 0 24 24">
+                                                        <path d="M14.095 10.316 22.286 1h-1.94L13.23 9.088 7.551 1H1l8.59 12.231L1 23h1.94l7.51-8.543L16.45 23H23zm-2.658 3.022-.872-1.218L3.64 2.432h2.98l5.59 7.821.869 1.219 7.265 10.166h-2.982z">
+                                                        </path>
+                                                    </svg>
+                                                </a>
+                                                <a target="_blank" class="contactsIcon" aria-label="linkedin" href="https://${item.socialNet.linkedIn}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="18" height="18" viewBox="0 0 438.536 438.535">
+                                                        <path d="M5.424 145.895H99.64v282.932H5.424zM408.842 171.739c-19.791-21.604-45.967-32.408-78.512-32.408q-17.988 0-32.695 4.427-14.7 4.424-24.838 12.419c-6.755 5.33-12.135 10.278-16.129 14.844-3.798 4.337-7.512 9.389-11.136 15.104v-40.232h-93.935l.288 13.706q.289 13.708.288 84.508 0 70.806-.572 184.722h93.931V270.942c0-9.705 1.041-17.412 3.139-23.127 4-9.712 10.037-17.843 18.131-24.407 8.093-6.572 18.13-9.855 30.125-9.855 16.364 0 28.407 5.662 36.117 16.987q11.56 16.987 11.561 46.966V428.82h93.931V266.664c-.007-41.688-9.897-73.328-29.694-94.925M53.103 9.708c-15.796 0-28.595 4.619-38.4 13.848C4.899 32.787 0 44.441 0 58.529 0 72.42 4.758 84.034 14.275 93.358q14.273 13.989 37.685 13.99h.571q23.986.002 38.688-13.99 14.701-13.986 14.417-34.829c-.19-14.087-5.047-25.742-14.561-34.973C81.562 14.323 68.9 9.708 53.103 9.708" style="fill: rgb(255, 255, 255);">
+                                                        </path>
+                                                    </svg>
+                                                </a>
+                                                <a target="_blank" class="contactsIcon" aria-label="facebook" href="http://${item.socialNet.facebook}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="18" height="18" viewBox="0 0 470.513 470.513"><path d="M271.521 154.17v-40.541c0-6.086.28-10.8.849-14.13.567-3.335 1.857-6.615 3.859-9.853q3-4.852 9.706-6.708 6.712-1.859 17.85-1.858h40.539V0h-64.809q-56.249 0-80.803 26.691c-16.368 17.798-24.551 44.014-24.551 78.658v48.82h-48.542v81.086h48.539v235.256h97.362V235.256h64.805l8.566-81.086z"></path>
+                                                    </svg>
+                                                </a>
+                                                <a target="_blank" class="contactsIcon" aria-label="telegram" href="https://${item.socialNet.telegram}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="22" height="22" fill="current" viewBox="0 0 24 24"><path d="M19.2 4.4 2.9 10.7c-1.1.4-1.1 1.1-.2 1.3l4.1 1.3 1.6 4.8c.2.5.1.7.6.7.4 0 .6-.2.8-.4l2-2 4.2 3.1c.8.4 1.3.2 1.5-.7l2.8-13.1c.3-1.1-.4-1.7-1.1-1.3m-2.1 3-7.8 7.1-.3 3.3L7.4 13l9.2-5.8c.4-.3.8-.1.5.2"></path><path d="M0 0h24v24H0z" style="fill: none;"></path>
+                                                    </svg>
+                                                </a>
+                                                <a target="_blank" class="contactsIcon" aria-label="instagram" href="http://${item.socialNet.instagram}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="22" height="22" viewBox="0 0 56.7 56.7">
+                                                        <path d="M28.2 16.7c-7 0-12.8 5.7-12.8 12.8s5.7 12.8 12.8 12.8S41 36.5 41 29.5s-5.8-12.8-12.8-12.8m0 21c-4.5 0-8.2-3.7-8.2-8.2s3.7-8.2 8.2-8.2 8.2 3.7 8.2 8.2-3.7 8.2-8.2 8.2"></path><circle cx="41.5" cy="16.4" r="2.9"></circle><path d="M49 8.9c-2.6-2.7-6.3-4.1-10.5-4.1H17.9c-8.7 0-14.5 5.8-14.5 14.5v20.5c0 4.3 1.4 8 4.2 10.7 2.7 2.6 6.3 3.9 10.4 3.9h20.4c4.3 0 7.9-1.4 10.5-3.9 2.7-2.6 4.1-6.3 4.1-10.6V19.3c0-4.2-1.4-7.8-4-10.4m-.4 31c0 3.1-1.1 5.6-2.9 7.3s-4.3 2.6-7.3 2.6H18c-3 0-5.5-.9-7.3-2.6C8.9 45.4 8 42.9 8 39.8V19.3c0-3 .9-5.5 2.7-7.3 1.7-1.7 4.3-2.6 7.3-2.6h20.6c3 0 5.5.9 7.3 2.7 1.7 1.8 2.7 4.3 2.7 7.2z">
+                                                        </path>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                            `}
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td  class="td-pad">
+                                            <h3>
+                                                Address 
+                                            </h3>
+                                        </td>
+                                        <td  class="td-pad">
+                                            <h3>
+                                                ${item.address[lang]}
+                                            </h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td  class="td-pad">
+                                            <h3>
+                                                Working time
+                                            </h3>
+                                        </td>
+                                        <td  class="td-pad">
+                                            <h3>
+                                                ${item.workingTime[lang]}
+                                            </h3>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        `)
+                    })
+            }
+            catch(error) {
+                console.log(error);
+                
+            }
+        }
+        
+        function openMenu(id) {
+            let allMenus = document.querySelectorAll("[id^='depMenu_']");
+            let allBoxes = document.querySelectorAll(".boxMenu");
+            let allDropdowns = document.querySelectorAll(".drop-menu");
+
+            allMenus.forEach(menu => {
+                if (menu.id !== `depMenu_${id}`) {
+                    menu.classList.add("none");
+                }
+            });
+        
+            allBoxes.forEach(box => {
+                if (box.getAttribute("onclick").includes(id)) {
+                    box.classList.toggle("active");
+                } else {
+                    box.classList.remove("active");
+                }
+            });
+        
+            allDropdowns.forEach(drop => {
+                if (drop.getAttribute("data-drop") === id) {
+                    drop.classList.toggle("active");
+                } else {
+                    drop.classList.remove("active");
+                }
+            });
+        
+            let menu = document.getElementById(`depMenu_${id}`);
+            if (menu) {
+                menu.classList.toggle("none");
+            } else {
+                console.warn(`Element not found: depMenu_${id}`);
+            }
+        }
+
+        if (namePage == "contacts") {
+            get_contacts()
+        }
+        if (namePage == "department" || namePage == "staff" || namePage == "region") {
+            get_all_department()
+        }
+        if (namePage == "guides") {
+            get_all_staff()
+        }
+    } 
+    else {
+        get_all_datas();
+    }
+</script>

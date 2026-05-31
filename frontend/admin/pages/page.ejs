@@ -1,0 +1,588 @@
+<div class="main__items">
+    <h1 style="text-align: center" class="mt-2">Page menu</h1>
+
+    <div class="row col-md-10 ms-13">
+        <button data-bs-toggle="offcanvas" data-bs-target="#CREATE_DATA" aria-controls="CREATE_DATA" type="button"
+            class="btn col-md-1 btn-success btn-sm">
+            Create
+        </button>
+        <button data-bs-toggle="offcanvas" data-bs-target="#ARCHIVE_DATA" aria-controls="ARCHIVE_DATA" type="button"
+            class="btn col-md-1 btn-danger btn-sm ms-1">
+            Archive
+        </button>
+    </div>
+
+    <div class="count row col-md-10 ms-12 mt-3">
+        <h4 id="count">Count: </h4>
+    </div>
+    <div id="myModal" class="modall">
+
+        <span class="close" onclick="close_modal()">&times;</span>
+      
+        <img class="modal-content" id="img01">
+      
+        <div id="caption"></div>
+    </div>
+    
+    <div class="news-table">
+    
+    </div>
+</div>
+<!-- Create -->
+<div class="offcanvas offcanvas-end" style="width: 1920px" data-bs-backdrop="static" tabindex="-1" id="CREATE_DATA" aria-labelledby="CREATE_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Create - News</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" style="display: flex; flex-direction: row; justify-content: space-evenly">
+        <div class="box-left" style="width: 25%">
+            <div class="col-md-12 mt-3">
+                <label style="font-size: 17px">Header</label>
+                <select id="headerPage" class="form-control form-control-sm"></select>
+                
+            </div>
+            <div class="col-md-12 mt-2">
+                <label style="font-size: 17px">Heading</label>
+                <input type="text" class="form-control form-control-sm " id="name_uz" placeholder="Sarlavha..." />
+                <input type="text" class="form-control form-control-sm mt-2" id="name_ru" placeholder="Загаловок..." />
+                <input type="text" class="form-control form-control-sm mt-2" id="name_eng" placeholder="Heading..." />
+            </div>           
+
+            <div class="col-md-12 mt-2">
+                <label style="font-size: 17px">Links</label>
+                <input type="text" id="facebook" class="form-control form-control-sm" placeholder="Facebook" />
+                <input type="text" id="twitter" class="form-control form-control-sm mt-2" placeholder="X" />
+                <input type="text" id="telegram" class="form-control form-control-sm mt-2" placeholder="Telegram" />
+            </div>
+
+            <div class="col-md-12 mt-2">
+                <label style="font-size: 17px">Photos</label>
+                <input type="file" id="photosInput" name="photos" accept=".jpg, .jpeg, .png, .webp"
+                    class="form-control form-control-sm" multiple />
+                <span style="font-size: 12px;">P.S make sure that file names are not same</span>
+            </div>
+
+            
+
+            <div class="col-md-12 mt-3">
+                <label style="font-size: 17px">Params Name</label>
+                <input type="text" id="paramsName" class="form-control form-control-sm"
+                    placeholder="example: sanoat..." />
+            </div>
+
+            <button onclick="create_data()" type="button" class="btn col-md-6 mt-3 btn-success btn-sm">
+                Save
+            </button>
+        </div>
+
+        <div class="box-right" style="display: grid">
+            <span style="font-size: 12px">uz *</span>
+            <textarea id="inputUz" name="input"></textarea>
+            <span style="font-size: 12px">ru *</span>
+            <textarea id="inputRu" name="input"></textarea>
+            <span style="font-size: 12px">eng *</span>
+            <textarea id="inputEng" name="input"></textarea>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" style="width: 1920px" data-bs-backdrop="static" tabindex="-1" id="EDIT_DATA" aria-labelledby="EDIT_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Edit - News</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body edit-data" style="display: flex; flex-direction: row; justify-content: space-evenly">
+        
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" style="width: 1920px" data-bs-backdrop="static" tabindex="-1" id="ARCHIVE_DATA" aria-labelledby="ARCHIVE_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Archive - News</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" style="display: flex; flex-direction: row; justify-content: space-evenly">
+        <div class="archive-box"></div>
+    </div>
+</div>
+
+<script src="/assets/js/axios.min.js"></script>
+<!-- <script src="/assets/js/jquery.min.js"></script> -->
+<script src="/assets/cleditor/jquery.cleditor.min.js"></script>
+
+<script>
+    const get_all_active = async (menu) => {
+        axios.get("/api/header/all", { params: { status: "active" } }).then(async (res) => {
+            const data = res.data.data; // [{}, {}, {}, ...]
+            const elem = $(menu);
+            await elem.html('')
+            elem.append(``)
+            data.forEach((header) => {
+                elem.append(`<option value="${header._id}">${header.name.uz}</option>`)
+            });
+            
+        })
+    }
+    get_all_active('#headerPage')
+    
+    const set_table_data = async (Arrays, Classes) => {
+        const result = Arrays; // [ {}, {}, {}, ... ]
+        const setTable = $(Classes);
+        await setTable.html("");
+        
+        result.forEach((item, index) => {
+            setTable.append(`
+                <div class="box" style="min-height: 360px;">
+                    <span class="count mt-3 ms-3" style="border-radius: 50%; background-color: #ffff; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">#${index += 1}</span>
+                    <article class="article">
+                        <a class="link" href="/pages/${item._id}">
+                            ${item.images[0] == undefined ? `<p style="height: 280px; font-size: 18px; color: #ffff; margin: 0; text-align: center; display: flex; align-items: center; justify-content: center;">No Image</p>` : `<img src="${item.images[0]}" style="width: 100%; height: 280px; object-fit: cover;">`}
+                            
+                        </a>
+                        <div class="footer">
+                            <div class="f-header">
+                                ${item.name.uz == undefined || item.name.uz == null || item.name.uz == ""
+                                    ? `<a href="/pages/${item._id}" id="truncate" class="header-text" style="color: #f04242;">${item.header.name.uz}</a>`
+                                    : `<a href="/pages/${item._id}" id="truncate" class="header-text">${item.name.uz}</a>`
+                                }
+                            </div>
+                            <div class="f-footer mt-1">
+                                <div class="cont">
+                                    <p>Date:</p>
+                                    <p>${new Date(item.createdAt).toLocaleDateString("en-GB")}</p>
+                                </div>
+                                <div class="cont mt-1">
+                                    <p>Params-number:</p>
+                                    <p>${item.params_number}</p>
+                                </div>
+                                <div class="cont mt-1">
+                                    <p>Params-name:</p>
+                                    ${item.params_name == undefined || item.params_name == ""
+                                        ? `<p>no data</p>`
+                                        : `<p>${item.params_name}</p>`
+                                    }
+                                </div>
+                                <div class="cont mt-1">
+                                    <p>Header:</p>
+                                    <span class="badge text-bg-primary">${item.header.name.uz}</span>
+                                                    
+                                </div>
+                                <div class="cont mt-1">
+                                    <p>Views:</p>
+                                    <p style="color: #fee4af;">${item.views}</p>                        
+                                </div>
+
+                                <div class="cont mt-1">
+                                    <p>Photos:</p>
+                                    <p>${item.images.length}</p>                        
+                                </div>
+                                <hr>
+                                <div class="cont mt-1">
+                                    <p>Options:</p>
+                                    <div class="child">
+                                        <button data-bs-toggle="offcanvas" data-bs-target="#EDIT_DATA" aria-controls="EDIT_DATA" onclick="get_data('${item._id}')" type="button" class="btn btn-warning btn-sm" style="font-size: 12px;">Edit</button>
+                                        <button onclick="fullDelete('${item._id}')" class="btn btn-danger btn-sm">Delete</button>
+                                    </div>                
+                                </div>
+                                <div class="cont mt-1">
+                                    <p>Status:</p>
+                                    <div class="child">
+                                        ${item.status == "active"
+                                            ?`<button onclick="change_status('${item._id}', 'archive')" class="btn btn-danger btn-sm">Archive</button>`
+                                            :`<button onclick="change_status('${item._id}', 'active')" class="btn btn-success btn-sm">Active</button>`
+                                        }
+                                    </div>                
+                                </div>
+                                <div class="cont mt-2">
+                                    <p>Telegram:</p>
+                                    ${item.links.telegram == "" 
+                                        ?`<p>no data</p>`
+                                        :`<a style="width: 22px; text-align: center;" href="${item.links.telegram}"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="22" height="22" class="link-svg" viewBox="0 0 24 24"><path d="M19.2 4.4 2.9 10.7c-1.1.4-1.1 1.1-.2 1.3l4.1 1.3 1.6 4.8c.2.5.1.7.6.7.4 0 .6-.2.8-.4l2-2 4.2 3.1c.8.4 1.3.2 1.5-.7l2.8-13.1c.3-1.1-.4-1.7-1.1-1.3m-2.1 3-7.8 7.1-.3 3.3L7.4 13l9.2-5.8c.4-.3.8-.1.5.2"></path><path d="M0 0h24v24H0z" style="fill: none;"></path></svg></a>`
+                                    }
+                                </div>  
+                                <div class="cont">
+                                    <p>Facebook:</p>
+                                    ${item.links.facebook == "" 
+                                        ?`<p>no data</p>`
+                                        :`<a style="width: 22px; text-align: center;" href="${item.links.facebook}"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="18" height="18" class="link-svg" viewBox="0 0 470.513 470.513"><path d="M271.521 154.17v-40.541c0-6.086.28-10.8.849-14.13.567-3.335 1.857-6.615 3.859-9.853q3-4.852 9.706-6.708 6.712-1.859 17.85-1.858h40.539V0h-64.809q-56.249 0-80.803 26.691c-16.368 17.798-24.551 44.014-24.551 78.658v48.82h-48.542v81.086h48.539v235.256h97.362V235.256h64.805l8.566-81.086z"></path></svg></a>`
+                                    }
+                                </div> 
+                                <div class="cont">
+                                    <p>X:</p>
+                                    ${item.links.twitter == "" 
+                                        ?`<p>no data</p>`
+                                        :`<a style="width: 22px; text-align: center;" href="${item.links.twitter}"><svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="18" height="18" class="link-svg" viewBox="0 0 24 24"><path d="M14.095 10.316 22.286 1h-1.94L13.23 9.088 7.551 1H1l8.59 12.231L1 23h1.94l7.51-8.543L16.45 23H23zm-2.658 3.022-.872-1.218L3.64 2.432h2.98l5.59 7.821.869 1.219 7.265 10.166h-2.982z"></path></svg></a>`
+                                    }
+                                </div>    
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            `);
+            
+            
+        });
+    };
+
+    const get_all_datas = async (Status) => {
+        axios.get("/api/pages/all", { params: { status: Status } })
+            .then(async (res) => {
+                if (Status == "active") {
+                    set_table_data(res.data.data, ".news-table");
+                } else {
+                    set_table_data(res.data.data, ".archive-box");
+                }
+                
+                const count = document.getElementById('count');
+                            
+                count.innerHTML = `${res.data.data.length == null || res.data.data.length == "" ? `<div style="display: grid; justify-items: center; align-content: center; width: 100%; height: 120px">
+                            <div>
+                                <svg width="64" height="41" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">
+                                    <title>No data</title>
+                                    <g transform="translate(0 1)" fill="none" fill-rule="evenodd">
+                                        <ellipse fill="#f5f5f5" cx="32" cy="33" rx="32" ry="7"></ellipse>
+                                        <g fill-rule="nonzero" stroke="#d9d9d9">
+                                            <path
+                                                d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z">
+                                            </path>
+                                            <path
+                                                d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                                fill="#fafafa"></path>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="mt-2" style="color: rgba(0, 0, 0, 0.45)">No data</div>
+                        </div>` : `<span>Count: ${res.data.data.length} pages</span>`} `
+        });
+
+            
+    };
+    get_all_datas("archive");
+    get_all_datas("active");
+
+    const fullDelete = async (id) => {
+        axios.delete(`/api/pages/${id}`).then((res) => {
+            const data = res.data;
+            
+            // alert(`${data} has been deleted`)
+            get_all_datas('active')    
+            get_all_datas('archive') 
+        })
+    }
+
+    const change_status = async (id, statusName) => {
+        axios.put(`/api/pages/${id}`, { status: statusName }).then((res) => {
+            const result = res.data;
+            if (result.status == true) {
+                get_all_datas('active')    
+                get_all_datas('archive')   
+            }
+        })
+    }
+
+    create_data = () => {
+        const name_uz = document.getElementById("name_uz").value;
+        const name_ru = document.getElementById("name_ru").value;
+        const name_eng = document.getElementById("name_eng").value;
+
+        function removeInlineStyles(html) {
+            return html.replace(/ style="[^"]*"/g, ''); // Removes all style attributes
+        }
+        
+        // Get values and clean them
+        const txt_uz = removeInlineStyles(document.getElementById("inputUz").value);
+        const txt_ru = removeInlineStyles(document.getElementById("inputRu").value);
+        const txt_eng = removeInlineStyles(document.getElementById("inputEng").value);
+        
+        const link_fb = document.getElementById("facebook").value;
+        const link_x = document.getElementById("twitter").value;
+        const link_tg = document.getElementById("telegram").value;
+        const header_page = document.getElementById("headerPage").value;
+        const params_name = document.getElementById("paramsName").value;
+
+        const images = document.getElementById("photosInput").files;
+
+        const tokens = window.localStorage.getItem("hTawDwdI4awd412wa");
+        if (!tokens) {
+            alert("You should sign-in to your profile");
+            return;
+        }
+        else {
+            axios.get("/api/admin/decode", { headers: { Authorization: tokens } }).then((res) => {
+                const data = res.data;
+                if (data.status === true) {
+                    const forms = new FormData();
+                    // Append text fields
+                    forms.append("name.uz", name_uz);
+                    forms.append("name.ru", name_ru);
+                    forms.append("name.eng", name_eng);
+                    forms.append("textarea.uz", txt_uz);
+                    forms.append("textarea.ru", txt_ru);
+                    forms.append("textarea.eng", txt_eng);
+                    forms.append("links.facebook", link_fb);
+                    forms.append("links.twitter", link_x);
+                    forms.append("links.telegram", link_tg);
+                    forms.append("params_name", params_name);
+                    
+
+                    // Append multiple images (Optional)
+                    if (images.length > 0) {
+                        for (const file of images) {
+                            forms.append("images", file);
+                        }
+                    }
+                    forms.append("header", header_page);
+                    // Send request with correct headers
+                    axios.post("/api/pages/create", forms, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    })
+                    .then((res) => {
+                        const responseData = res.data;
+                        if (responseData.status) {
+                            alert("Page created successfully!");
+                        } else {
+                            alert("Error: " + responseData.message);
+                        }
+                    })
+                    .catch((err) => {
+                        console.error("Error:", err);
+                        alert("Server error. Try again later.");
+                    });
+                } else {
+                    alert("Akkountga kirish kerak!");
+                }
+            });
+        }
+    }
+
+    const get_data = async (id) => {
+        axios.get(`/api/pages/${id}`).then(async (res) => {
+            const result = res.data;
+            if (result.status == true) {
+                const setTable = $(".edit-data")
+                await setTable.html("")
+                setTable.append(`
+                    <div class="box-left">
+
+                        <div class="col-md-12">
+                            <label style="font-size: 17px">Header pages</label>
+                            <select id="headerPagee" class="form-control form-control-sm">
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 mt-2">
+                            <label style="font-size: 17px">Heading</label>
+                            <input type="text" class="form-control form-control-sm" id="name_uzE" placeholder="Sarlavha..." value="${result.data.name.uz}" />
+                            <input type="text" class="form-control form-control-sm mt-2" id="name_ruE" placeholder="Загаловок..." value="${result.data.name.ru}" />
+                            <input type="text" class="form-control form-control-sm mt-2" id="name_engE" placeholder="Heading..." value="${result.data.name.eng}" />
+                        </div>
+                    
+                        <div class="col-md-12 mt-2">
+                            <label style="font-size: 17px">Links</label>
+                            <input type="text" id="facebookE" class="form-control form-control-sm" placeholder="Facebook" value="${result.data.links.facebook}" />
+                            <input type="text" id="twitterE" class="form-control form-control-sm mt-2" placeholder="X" value="${result.data.links.twitter}" />
+                            <input type="text" id="telegramE" class="form-control form-control-sm mt-2" placeholder="Telegram" value="${result.data.links.telegram}" />
+                        </div>
+                    
+                        <div class="col-md-12 mt-2">
+                            <label style="font-size: 17px">Photos</label>
+                            <input type="file" id="photosInputE" class="form-control form-control-sm" multiple accept=".jpg, .jpeg, .png, .webp">
+                            <span style="font-size: 12px;">P.S make sure that file names are not same</span>
+                        </div>
+                    
+                        
+                    
+                        <div class="col-md-12 mt-3">
+                            <label style="font-size: 17px">Params Name</label>
+                            <input type="text" id="paramsNameE" class="form-control form-control-sm"
+                                placeholder="example: sanoat..." value="${result.data.params_name}" />
+                        </div>
+                    
+                        <button onclick="update_data('${result.data._id}')" type="button" class="btn col-md-6 mt-3 btn-success btn-sm">
+                            Update
+                        </button>
+                    </div>
+                
+                    <div class="box-right" style="display: flex; flex-direction: column; max-width: 830px">
+
+                        <div class="col-md-12 mt-3" style="display: grid">
+                            <span style="font-size: 12px">uz</span>
+                            <textarea style="border: 1px solid #000;" id="inputUzE" name="input">${result.data.textarea.uz}</textarea>
+                            <span style="font-size: 12px; height: 20px">ru</span>
+                            <textarea style="border: 1px solid #000;" id="inputRuE" name="input">${result.data.textarea.ru}</textarea>
+                            <span style="font-size: 12px">eng</span>
+                            <textarea style="border: 1px solid #000;" id="inputEngE" name="input">${result.data.textarea.eng}</textarea>
+                        </div>
+
+
+                        <div class="col-md-12 mt-1" style="display: flex; width: 830px; justify-content: space-between; align-items: center;">
+                            <span>${result.data.images.length} - Images</span>
+                            <button onclick="editImages('${result.data._id}', 'dell')" type="button" class="btn btn-danger col-md-2 btn-sm">
+                                Delete images
+                            </button>
+                        </div>
+
+                        <div class="col-md-12 mt-1 img-put" style="display: flex; width: 830px; justify-content: flex-start; box-shadow: 0px 0.5px 20px 0px rgba(0, 0, 0, 0.1); border-radius: 0.2rem;">
+                            
+                        </div>
+
+                        
+                    </div>
+                `)
+                setImgs(id)
+                const CategoryId = result.data.header._id;
+                
+                axios.get("/api/header/all", { params: { status: 'active' } }).then(async (res) => {
+                    const data = res.data.data; // [{}, {}, {}, ...]
+                    const elem = $('#headerPagee');
+                    await elem.html('')
+                    data.forEach((header) => {
+                        elem.append(`<option ${header._id == CategoryId ? 'selected' : ''} value="${header._id}">${header.name.uz}</option>`)
+                    });
+                })
+            }
+            
+        })     
+    }
+
+    const setImgs = async (id) => {
+        axios.get(`/api/pages/${id}`).then(async (res) => {
+            const result = res.data;  
+            if (result.status == true) {
+                const setImage = $(".img-put")
+                await setImage.html("")
+                if(result.data.images.length == 0 ) {
+                    setImage.append(`
+                        <div style="display: grid; justify-items: center; align-content: center; width: 100%; height: 120px">
+                            <div>
+                                <svg width="64" height="41" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">
+                                    <title>No data</title>
+                                    <g transform="translate(0 1)" fill="none" fill-rule="evenodd">
+                                        <ellipse fill="#f5f5f5" cx="32" cy="33" rx="32" ry="7"></ellipse>
+                                        <g fill-rule="nonzero" stroke="#d9d9d9">
+                                            <path
+                                                d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z">
+                                            </path>
+                                            <path
+                                                d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                                fill="#fafafa"></path>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="mt-2" style="color: rgba(0, 0, 0, 0.45)">No data</div>
+                        </div>
+                    `) 
+                } else {                    
+                    for (let index = 0; index < result.data.images.length; index++) {
+                        setImage.append(`
+                        <div class="image-container">
+                            <img src="${result.data.images[index]}" class='image' style="width: 260px; height: 160px; object-fit: cover; border: 1px solid #000;">
+                            <span class="delete-btn" value="${index}" id="dltBtnImage">&times;</span>
+                        </div>
+                        `)    
+                    }
+                    const allDelBtns = document.querySelectorAll("#dltBtnImage");
+                    
+                    allDelBtns.forEach((item, index) => {
+                        item.addEventListener("click", ()=>{
+                            deleteSelectedImage(id, result.data.images[index])
+                        });
+                    })
+                      
+                }
+
+            }
+        }) 
+    }
+
+    const update_data = (id) => {
+        const name_uz = document.getElementById("name_uzE").value.trim();
+        const name_ru = document.getElementById("name_ruE").value.trim();
+        const name_eng = document.getElementById("name_engE").value.trim();
+        const txt_uz = document.getElementById("inputUzE").value.trim();
+        const txt_ru = document.getElementById("inputRuE").value.trim();
+        const txt_eng = document.getElementById("inputEngE").value.trim();
+        const link_fb = document.getElementById("facebookE").value.trim();
+        const link_x = document.getElementById("twitterE").value.trim();
+        const link_tg = document.getElementById("telegramE").value.trim();
+        const header_page = document.getElementById("headerPagee").value.trim();
+        const params_name = document.getElementById("paramsNameE").value.trim();
+
+        const imagesInput = document.getElementById("photosInputE");
+
+        const images = imagesInput?.files || []; 
+        
+        if(images.length > 0) {
+            editImages(id, "set")            
+        }
+        axios.put(`/api/pages/${id}`, {
+            name: { uz: name_uz, ru: name_ru, eng: name_eng },
+            textarea: { uz: txt_uz, ru: txt_ru, eng: txt_eng },
+            links: { facebook: link_fb, twitter: link_x, telegram: link_tg },
+            header: header_page,
+            params_name: params_name,
+        })
+            .then(response => {
+                response.data
+                get_all_datas("active");
+                get_all_datas("archive");
+                get_data(id);
+                setImgs(id); 
+            })
+            .catch(error => console.error("Error updating news:", error));
+    };
+
+    const editImages = (id, clas) => {
+        const imagesInput = document.getElementById('photosInputE');
+        const images = imagesInput?.files || [];
+        const formData = new FormData();       
+        
+        if (clas == "dell") {
+            axios.delete(`/api/pages/imgs/${id}`).then((res) => {
+                get_all_datas("active");
+                get_all_datas("archive");
+                get_data(id);
+                setImgs(id);
+            }).catch(error => {
+                console.error("Images Delete Error:", error);
+            });
+        }
+    
+        if (clas == "set") {
+            if (images.length > 0) {
+                for (const file of images) {
+                    formData.append("images", file); 
+                }
+            }
+        
+            axios.put(`/api/pages/files/${id}`, formData)
+                .then((res) => {
+                    
+                    get_all_datas("active");
+                    get_all_datas("archive");
+                    get_data(id);
+                    setImgs(id);
+                })
+                .catch(error => {
+                    console.error("Images Upload Error:", error);
+                });
+        }
+    };
+
+
+    const deleteSelectedImage = (pageId, imagePath) => {
+        axios.delete(`/api/pages/img/${pageId}`, { data: { imagePath } })
+            .then((res) => {
+                get_all_datas("active");
+                get_all_datas("archive");
+                get_data(pageId);
+                setImgs(pageId);
+            })
+            .catch(error => {
+                console.error("Image Delete Error:", error);
+            });
+    };
+
+</script>

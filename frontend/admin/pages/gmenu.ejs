@@ -1,0 +1,226 @@
+<div class="main__items">
+
+    <h1 style="text-align: center;" class="mt-2">Gmenu</h1>
+
+    <div class="row col-md-10 ms-16">
+        <button data-bs-toggle="offcanvas" data-bs-target="#CREATE_DATA" aria-controls="CREATE_DATA" type="button"
+            class="btn col-md-1 btn-success btn-sm">Create</button>
+        <button data-bs-toggle="offcanvas" data-bs-target="#ARCHIVE_DATA" aria-controls="ARCHIVE_DATA" type="button"
+            class="btn col-md-1 btn-danger btn-sm  ms-1">Archive</button>
+    
+    </div>
+    
+    
+    <!-- Jadval -->
+    <div class="row col-md-12 mt-2" style="padding: 20px 110px;">
+        <div class="col-md-12">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr class="table-dark">
+                        <th style="width: 5%;" class="text-center">#</th>
+                        <th style="width: 20%;">Name - UZ</th>
+                        <th style="width: 20%;">Name - RU</th>
+                        <th style="width: 20%;">Name - ENG</th>
+                        <th style="width: 5% !important;">Status</th>
+                        <th style="width: 5% !important;">Date</th>
+                        <th style="width: 15%;">Edit</th>
+                    </tr>
+                </thead>
+                <tbody class="SET-TABLE">
+    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Create -->
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="CREATE_DATA"
+    aria-labelledby="CREATE_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Create</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <input type="text" class="form-control form-control-sm" id="NameUz" placeholder="Asosiy Menu nomi">
+        <input type="text" class="form-control form-control-sm mt-2" id="NameRu" placeholder="Название Гл. Меню">
+        <input type="text" class="form-control form-control-sm mt-2" id="NameEng" placeholder="Main Menu name">
+        <button onclick="create_data()" type="button" class="btn col-md-3 mt-3 btn-success btn-sm">Save</button>
+    </div>
+</div>
+<!-- Archive -->
+<div class="offcanvas offcanvas-end" style="width: 55%;" data-bs-backdrop="static" tabindex="-1" id="ARCHIVE_DATA"
+    aria-labelledby="ARCHIVE_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Archive datas</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col">#</th>
+                    <th scope="col">Name - UZ</th>
+                    <th scope="col">Name - RU</th>
+                    <th scope="col">Name - ENG</th>
+                    <th scope="col" style="width: 10%;">Status</th>
+                    <th scope="col" style="width: 10%;">Sana</th>
+                    <th scope="col" style="width: 15%;">Sozlama</th>
+                </tr>
+            </thead>
+            <tbody class="SET-TABLE-ARCHIVE">
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<!-- Edit -->
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="EDIT_DATA" aria-labelledby="EDIT_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Edit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body edit-data">
+
+    </div>
+</div>
+
+
+<script src="/assets/js/axios.min.js"></script>
+<script>
+
+    // HTML ga malumotlarni joylash
+    const set_table_data = async (Arrays, Classes) => {
+        const result = Arrays; // [ {}, {}, {}, ... ]
+        const setTable = $(Classes)
+        await setTable.html("")
+        result.forEach((item, index) => {
+            setTable.append(`
+                    <tr>
+                        <th>${index += 1}</th>
+                        <td>${item.name.uz}</td>
+                        <td>${item.name.ru}</td>
+                        <td>${item.name.eng}</td>
+                        <td>
+                            ${item.status == 'active' ?
+                    `<span style="font-weight: 500;" class="badge text-bg-success">Active</span>`
+                    :
+                    `<span style="font-weight: 500;" class="badge text-bg-danger">Freeze</span>`
+                }
+                        </td>
+                        <td>${new Date(item.createdAt).toLocaleDateString('en-GB')}</td>
+                        <td>
+                            ${item.status == 'active' ?
+                    `
+                                    <button data-bs-toggle="offcanvas" data-bs-target="#EDIT_DATA" aria-controls="EDIT_DATA" onclick="get_data('${item._id}')" type="button" class="btn btn-warning btn-sm" style="font-size: 12px;" >
+                                        Edit
+                                    </button>
+                                    <button onclick="change_status('${item._id}', 'archive')" type="button" class="btn btn-danger btn-sm" style="font-size: 12px;" >
+                                        Archive
+                                    </button>
+                                `
+                    :
+                    `
+                                    <button onclick="change_status('${item._id}', 'active')" type="button" class="btn btn-primary btn-sm" style="font-size: 12px;" >
+                                        Active
+                                    </button>
+                                    <button onclick="fullDelete('${item._id}')" type="button" class="btn btn-danger btn-sm" style="font-size: 12px;" >
+                                        Dell
+                                    </button>
+                                `
+                }
+                        </td>
+                    </tr>
+                `)
+        });
+    }
+
+    const get_all_datas = async (Status) => {
+        axios.get("/api/gmenu/all", { params: { status: Status } }).then(async (res) => {
+            if (Status == 'active') {
+                set_table_data(res.data.data, '.SET-TABLE')
+            }
+            else {
+                set_table_data(res.data.data, '.SET-TABLE-ARCHIVE')
+            }
+        })
+    }
+    get_all_datas('active')    
+    get_all_datas('archive')    
+
+    // 2.Create
+    const create_data = async () => {
+        const nameUz = document.getElementById("NameUz").value;
+        const nameRu = document.getElementById("NameRu").value;
+        const nameEng = document.getElementById("NameEng").value;
+        if (nameUz == "" || nameRu == "" || nameEng == "") alert("Malumotni kiriting")
+        else {
+            axios.post("/api/gmenu/create", { name: {uz: nameUz, ru: nameRu, eng: nameEng} }).then((res) => {
+                const result = res.data;
+                if (result.status == true) {
+                    get_all_datas('active') 
+                }
+            })
+        }
+    }
+
+    // 3.Alohida olish
+    const get_data = async (id) => {
+        axios.get(`/api/gmenu/${id}`).then(async (res) => {
+            const result = res.data;
+            if (result.status == true) {
+                const setTable = $(".edit-data")
+                await setTable.html("")
+                setTable.append(`
+                    <input id="NamesUz" value="${result.data.name.uz}" type="text" class="form-control form-control-sm"  placeholder="Name - UZ">
+                    <input id="NamesRu" value="${result.data.name.ru}" type="text" class="form-control form-control-sm"  placeholder="Name - RU">
+                    <input id="NamesEng" value="${result.data.name.eng}" type="text" class="form-control form-control-sm"  placeholder="Name - ENG">
+                    <button onclick="update_data('${result.data._id}')" type="button" class="btn col-md-3 mt-3 btn-success btn-sm">Edit</button>
+                `)
+
+            }
+        })
+    }
+
+    // 4.Edit
+    const update_data = async (id) => {
+        const namingUz = document.getElementById('NamesUz').value;
+        const namingRu = document.getElementById('NamesRu').value;
+        const namingEng = document.getElementById('NamesEng').value;
+        if (namingUz == "" || namingRu == "" || namingEng == "") alert("Malumotni kiriting")
+        else {
+            axios.put(`/api/gmenu/${id}`, { name: {uz: namingUz, ru: namingRu, eng: namingEng} }).then((res) => {
+                const result = res.data;
+                if (result.status == true) {
+                    get_all_datas('active')  
+                    get_all_datas('archive')  
+                }
+            })
+        }
+    }
+
+    // 5.Faollashtir yoki Archivelash
+    const change_status = async (id, statusName) => {
+        axios.put(`/api/gmenu/${id}`, { status: statusName }).then((res) => {
+            const result = res.data;
+            if (result.status == true) {
+                get_all_datas('active')    
+                get_all_datas('archive')   
+            }
+        })
+    }
+
+    const fullDelete = async (id) => {
+        axios.delete(`/api/gmenu/${id}`).then((res) => {
+            const data = res.data.data;
+            alert(`${data} has been deleted`)
+            get_all_datas('active')    
+            get_all_datas('archive') 
+        })
+    }
+
+</script>

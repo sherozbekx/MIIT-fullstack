@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en"
+    style="--font-xxsm: 0.625rem; --font-xsm: 0.875rem; --font-sm: 1rem; --font: 1.125rem; --font-md: 1.25rem; --font-lg: 1.5rem; --font-xlg: 1.875rem; --font-xxlg: 2.25rem; --font-xxxlg: 3rem; font-size: 100%;">
+
+<head>
+    <title><%= t.siteName %></title>
+    <meta charset="utf-8">
+    <link rel="icon" href="https://api-portal.gov.uz/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="meta description">
+    <link href="/assets/css/client.css" rel="stylesheet">
+    <link href="/assets/css/clientG.css" rel="stylesheet">
+    <link href="/assets/css/color-schema.css" rel="stylesheet">
+
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+    <%- include("./language"); %>
+    <header class="header_section">
+        <div class="relative flex flex-col m_cace">
+            <div class="header__pc">
+                <a class="flex align-center header_href" href="/">
+                    <img class="header_img object-contain"
+                        src="https://api-portal.gov.uz/uploads/b7824a9f-ebbc-80ea-06df-4dada0642929_media_.png"
+                        alt="logo">
+                    <h2 class="header_title"><%= t.siteName %></h2>
+                </a>
+                <div>
+                    <div class="shrink-0 flex">
+                        <button class="header_search m_btn" style="text-decoration: none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+                                <path fill="current" fill-rule="evenodd"
+                                    d="M19.427 21.427a8.5 8.5 0 1 1 2-2l5.585 5.585c.55.55.546 1.43 0 1.976l-.024.024a1.4 1.4 0 0 1-1.976 0zM14.5 21a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13">
+                                </path>
+                            </svg>
+                        </button>
+                        <span class="header_phone relative">
+                            <svg xmlns="http://www.w3.org/2000/svg" data-name="483947" viewBox="0 0 17.2 17.2">
+                                <path
+                                    d="M15.82 11.29a9.8 9.8 0 0 1-3.067-.488 1.4 1.4 0 0 0-1.363.287l-1.934 1.46a10.7 10.7 0 0 1-4.805-4.8l1.416-1.888a1.39 1.39 0 0 0 .342-1.409 9.8 9.8 0 0 1-.49-3.072A1.38 1.38 0 0 0 4.539 0H1.38A1.38 1.38 0 0 0 0 1.38 15.84 15.84 0 0 0 15.82 17.2a1.38 1.38 0 0 0 1.38-1.38v-3.15a1.38 1.38 0 0 0-1.38-1.38"
+                                    data-name="telephone"></path>
+                            </svg>
+                        </span>
+                        <div class="flex flex-col">
+                            <h3 class="hotline"><%= t.ourPhone  %></h3>
+                            <div class="flex phone" id="hotlinePhone">
+                            </div>
+                            <a href="/" class="header_contact"><%= t.allNumbers  %></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header_navigation">
+                <div class="header_header_menu flex" id="header_nav">
+                    
+                </div>
+                <div class="burger_container">
+                    <button class="header_sitemap__btn m_btn m_fea6bf1a">
+                        <div class="m_burger">
+
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <%- body %>
+
+    </main>
+
+    <footer class="footer_section">
+        <div class="flex flex-col py-10 m_cace">
+            <div class="footer_nav flex">
+
+            </div>
+            <div class="footer_info flex">
+                <div class="m_410352e9 footer_text __m__-rrg">
+                    <div class="m_dee7bd2f footer_cont">
+                        <div class="m_96bdd299 footer_box __m__-rri">
+                            <div class="flex flex-col __m__-rrf">
+                                <a href="/"
+                                    class="font--md font-medium uppercase max-w-xl lg:mx-auto lg:block lg:text-center lg:capitalize">
+                                    <%= t.siteName  %>
+                                </a>
+                                <p class="font--sm"><%= t.address  %></p>
+                            </div>
+                        </div>
+                        <div class="m_96bdd299 footer_box __m__-rri">
+                            <div class="flex flex-col __m__-rrf">
+                                <a target="_blank" class="w-max mx-auto" href="https://uzinfocom.uz/en">
+                                    <!-- <img alt="UZINFOCOM" loading="lazy" width="152" height="16" decoding="async"
+                                        data-nimg="1" src="https://gov.uz/img/UZINFOCOM.svg"
+                                        style="color: transparent;"> -->
+                                </a>
+                                <p class="font--sm text-center max-w-xs"><%= t.rights  %></p>
+                            </div>
+                        </div>
+                        <div class="m_96bdd299 footer_box __m__-rri">
+                            <div class="flex flex-col __m__-rre">
+                                <div class="media_nav flex">
+                                    <a target="_blank" class="social-media-icon" aria-label="Twitter"
+                                        href="https://twitter.com/MIIT_Uz"><svg xmlns="http://www.w3.org/2000/svg"
+                                            xml:space="preserve" width="18" height="18" viewBox="0 0 24 24">
+                                            <path
+                                                d="M14.095 10.316 22.286 1h-1.94L13.23 9.088 7.551 1H1l8.59 12.231L1 23h1.94l7.51-8.543L16.45 23H23zm-2.658 3.022-.872-1.218L3.64 2.432h2.98l5.59 7.821.869 1.219 7.265 10.166h-2.982z">
+                                            </path>
+                                        </svg></a>
+                                    <a target="_blank" class="social-media-icon" aria-label="LinkedIn"
+                                        href="https://www.linkedin.com/company/ministry-of-investments-industry-and-trade-of-the-republic-of-uzbekistan"><svg
+                                            xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="18"
+                                            height="18" viewBox="0 0 438.536 438.535">
+                                            <path
+                                                d="M5.424 145.895H99.64v282.932H5.424zM408.842 171.739c-19.791-21.604-45.967-32.408-78.512-32.408q-17.988 0-32.695 4.427-14.7 4.424-24.838 12.419c-6.755 5.33-12.135 10.278-16.129 14.844-3.798 4.337-7.512 9.389-11.136 15.104v-40.232h-93.935l.288 13.706q.289 13.708.288 84.508 0 70.806-.572 184.722h93.931V270.942c0-9.705 1.041-17.412 3.139-23.127 4-9.712 10.037-17.843 18.131-24.407 8.093-6.572 18.13-9.855 30.125-9.855 16.364 0 28.407 5.662 36.117 16.987q11.56 16.987 11.561 46.966V428.82h93.931V266.664c-.007-41.688-9.897-73.328-29.694-94.925M53.103 9.708c-15.796 0-28.595 4.619-38.4 13.848C4.899 32.787 0 44.441 0 58.529 0 72.42 4.758 84.034 14.275 93.358q14.273 13.989 37.685 13.99h.571q23.986.002 38.688-13.99 14.701-13.986 14.417-34.829c-.19-14.087-5.047-25.742-14.561-34.973C81.562 14.323 68.9 9.708 53.103 9.708"
+                                                style="fill: rgb(255, 255, 255);"></path>
+                                        </svg></a>
+                                    <a target="_blank" class="social-media-icon" aria-label="Facebook"
+                                        href="http://facebook.com/miit.uz"><svg xmlns="http://www.w3.org/2000/svg"
+                                            xml:space="preserve" width="18" height="18" viewBox="0 0 470.513 470.513">
+                                            <path
+                                                d="M271.521 154.17v-40.541c0-6.086.28-10.8.849-14.13.567-3.335 1.857-6.615 3.859-9.853q3-4.852 9.706-6.708 6.712-1.859 17.85-1.858h40.539V0h-64.809q-56.249 0-80.803 26.691c-16.368 17.798-24.551 44.014-24.551 78.658v48.82h-48.542v81.086h48.539v235.256h97.362V235.256h64.805l8.566-81.086z">
+                                            </path>
+                                        </svg></a>
+                                    <a target="_blank" class="social-media-icon" aria-label="Telegram"
+                                        href="https://m.sitehelp.me/telegram?siteId=saui5fs1ovorhvfeb1dq870ygx6gablx&amp;clientId=0ECXL0orT4kT4fX0qczVrqZIFtAWMp8O&amp;url=https%3A%2F%2Ft.me%2FMIIT_UZ"><svg
+                                            xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="22"
+                                            height="22" fill="current" viewBox="0 0 24 24">
+                                            <path
+                                                d="M19.2 4.4 2.9 10.7c-1.1.4-1.1 1.1-.2 1.3l4.1 1.3 1.6 4.8c.2.5.1.7.6.7.4 0 .6-.2.8-.4l2-2 4.2 3.1c.8.4 1.3.2 1.5-.7l2.8-13.1c.3-1.1-.4-1.7-1.1-1.3m-2.1 3-7.8 7.1-.3 3.3L7.4 13l9.2-5.8c.4-.3.8-.1.5.2">
+                                            </path>
+                                            <path d="M0 0h24v24H0z" style="fill: none;"></path>
+                                        </svg></a>
+                                    <a target="_blank" class="social-media-icon" aria-label="Instagram"
+                                        href="http://instagram.com/miit.uz"><svg xmlns="http://www.w3.org/2000/svg"
+                                            xml:space="preserve" width="22" height="22" viewBox="0 0 56.7 56.7">
+                                            <path
+                                                d="M28.2 16.7c-7 0-12.8 5.7-12.8 12.8s5.7 12.8 12.8 12.8S41 36.5 41 29.5s-5.8-12.8-12.8-12.8m0 21c-4.5 0-8.2-3.7-8.2-8.2s3.7-8.2 8.2-8.2 8.2 3.7 8.2 8.2-3.7 8.2-8.2 8.2">
+                                            </path>
+                                            <circle cx="41.5" cy="16.4" r="2.9"></circle>
+                                            <path
+                                                d="M49 8.9c-2.6-2.7-6.3-4.1-10.5-4.1H17.9c-8.7 0-14.5 5.8-14.5 14.5v20.5c0 4.3 1.4 8 4.2 10.7 2.7 2.6 6.3 3.9 10.4 3.9h20.4c4.3 0 7.9-1.4 10.5-3.9 2.7-2.6 4.1-6.3 4.1-10.6V19.3c0-4.2-1.4-7.8-4-10.4m-.4 31c0 3.1-1.1 5.6-2.9 7.3s-4.3 2.6-7.3 2.6H18c-3 0-5.5-.9-7.3-2.6C8.9 45.4 8 42.9 8 39.8V19.3c0-3 .9-5.5 2.7-7.3 1.7-1.7 4.3-2.6 7.3-2.6h20.6c3 0 5.5.9 7.3 2.7 1.7 1.8 2.7 4.3 2.7 7.2z">
+                                            </path>
+                                        </svg></a>
+                                </div>
+                                <!-- <div id="www_counter_view"><a href="https://www.uz/res/visitor/index?id=536"
+                                        target="_blank" aria-label="www.uz"><img
+                                            src="https://cnt0.www.uz/counter/collect?id=536&amp;r=https%3A//www.google.com/&amp;pg=https%3A//gov.uz/en/miit/pages/vazirlik-haqida&amp;c=Y&amp;j=N&amp;wh=1920x1080&amp;px=24&amp;js=1.3&amp;col=376dbf&amp;t=ffffff&amp;p=BD6F6F"
+                                            width="88" height="30" border="0" alt="www.uz"></a>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="/assets/js/axios.min.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        var lang = "<%= t.lang %>";
+
+        const dropdownButtons = document.querySelectorAll('.m_btn.dropdown-toggle');
+
+        dropdownButtons.forEach(button => {
+            const dropdownMenu = button.nextElementSibling; // Get the corresponding dropdown menu
+
+            button.addEventListener('mouseleave', () => {
+                // Check if ANY button has an associated dropdown with the "show" class
+                const anyDropdownOpen = [...dropdownButtons].some(btn =>
+                    btn.nextElementSibling?.classList.contains('show')
+                );
+
+                if (!anyDropdownOpen) {
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+        });  
+    </script>
+    <script>
+        
+        const set_gmenu_data = async (Arrays, Classes) => {
+            const result = Arrays;
+            const setTable = $(Classes);
+            await setTable.html("");
+
+            result.forEach((item, index) => {
+                // Apply "dropdown-menu-end" to the last three items
+                const dropdownClass = index >= result.length - 3 ? "dropdown-menu dropdown-menu-end" : "dropdown-menu";
+
+                setTable.append(`
+                    ${item.name[lang] == "" ? `` : `
+                        <div class="btn-group">
+                            <button class="m_btn dropdown-toggle" type="button" id="defaultDropdown_${item._id}" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                                ${item.name[lang]}
+                            </button>
+                            <ul class="${dropdownClass} m_38a85659" id="dropdown_${item._id}" aria-labelledby="defaultDropdown_${item._id}">
+                            </ul>
+                        </div>
+                    `}
+                `);
+            });
+        };
+        const set_gmenu_footer_data = async (Arrays, Classes) => {
+            const result = Arrays;
+            const setTable = $(Classes);
+            await setTable.html("");
+            result.forEach((item, index) => {
+                setTable.append(`
+                    ${item.name[lang] == "" ? `` : `
+                        <li class="footer_nav-list">
+                            <a href="#" class="font--sm font-medium uppercase">${item.name[lang]}</a>
+                        </li>
+                    `}
+                `);
+            });
+        };
+        const set_header_data = async (Arrays, page) => {
+            const result = Arrays;
+            const pageGH = page;
+            var pageLinks = result
+                .filter(item => item.link && !item.link.startsWith("https://")) 
+                .map(item => item.link);
+            
+            const headerIDs = pageGH.map((item) => item.header?._id).filter(Boolean);
+            result.forEach((item) => {
+                if (item.gmenu._id) { 
+                    const isHeaderMatched = headerIDs.includes(item._id);
+                    const matchedPage = pageGH.find((pg) => pg.header?._id === item._id);
+                    const paramsName = matchedPage ? matchedPage.params_name : "";
+                    // console.log(item);
+                    
+
+                    
+                    $(`#dropdown_${item.gmenu._id}`).append(`
+                        ${item.name[lang] == "" ? `` : `                    
+                            <li class="only-2-lines">
+                                ${!item.link ? `
+                                    <a class="dropdown-item" href="/page/${isHeaderMatched ? paramsName : ''}">${item.name[lang]}</a>
+                                    ` : `
+                                    <a class="dropdown-item" ${pageLinks.includes(item.link) ? `` : `target="_blank"` } href="${item.link}">${item.name[lang]}</a>
+                                `}
+                            </li>
+                        `}
+                    `);
+                }
+            });
+        };
+        const get_all_data = async () => {
+            try {
+                const gmenuResponse = await axios.get("/api/gmenu/all", { params: { status: 'active' } });
+                await set_gmenu_data(gmenuResponse.data.data, '.header_header_menu');
+                await set_gmenu_footer_data(gmenuResponse.data.data, '.footer_nav');
+                const headerResponse = await axios.get("/api/header/all", { params: { status: 'active' } });
+                
+                const pagesResponse = await axios.get("/api/pages/all", { params: { status: 'active' } });
+                await set_header_data(headerResponse.data.data, pagesResponse.data.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        get_all_data();
+    </script>
+    <script>
+        if (!window.location.pathname.startsWith("/page/") && !window.location.pathname.startsWith("/sections/")) {
+            get_gmenu_show = async () => {
+                const namePage = window.location.pathname.split('/')[1];
+                if(namePage == "news" || namePage == "meeting" || namePage == "events") {
+                    var responseHeader = await axios.get(`/api/news/all`, { params: { status: "active" } });
+                    var response = await axios.get(`/api/header/search`, { params: { status: "active", link: `/${namePage}` } });
+                } 
+                else if (namePage == "staff") {
+                    var responseHeader = await axios.get(`/api/staff/all`, { params: { status: "active" } });
+                    var response = await axios.get(`/api/department/all`, { params: { status: "active" } });
+                }
+                else if (namePage == "region") {
+                    var responseHeader = await axios.get(`/api/region/all`, { params: { status: "active" } });
+                    var response = await axios.get(`/api/department/all`, { params: { status: "active" } });
+                }
+                else if (namePage == "contacts") {
+                    var responseHeader = await axios.get(`/api/contacts/all`, { params: { status: "active" } });
+                    var response = await axios.get(`/api/header/search`, { params: { link: `/${namePage}` } });
+                    
+                } 
+                else {
+                    var response = await axios.get(`api/${namePage}/all`, { params: { status: "active" } });
+                }
+                const result = response.data.data
+                
+                if (namePage == "news" || namePage == "meeting" || namePage == "events" || namePage == "contacts") {
+                    var gmenuID = result.map((item) => item?.gmenu);
+                }
+                else {
+                    var gmenuID = result.map((item) => item.header?.gmenu);
+                }
+                
+                const gmenuBtn = document.getElementById(`defaultDropdown_${gmenuID[0]}`);
+                if (gmenuBtn) {
+                    gmenuBtn.classList.add('show');
+                } else {
+                    console.error(`Element with ID defaultDropdown_${gmenuID[0]} not found`);
+                }
+            }
+
+        } else {
+            get_gmenu_show = async () => {
+                const pageName = window.location.pathname.split("/page/")[1];
+                const pageNameSec = match ? (match[0]) : null;
+                if(namePage == "page") {
+                    var response = await axios.get("/api/pages", { params: { params_name: pageName, status: "active" } });
+                }
+                else {
+                    var response = await axios.get("/api/sections", { params: { params_name: pageNameSec, status: "active" } });
+                }
+                const gmenuID = response.data.data.header.gmenu
+                const gmenuBtn = document.getElementById(`defaultDropdown_${gmenuID}`);
+                console.log(gmenuID);
+                
+                if (gmenuBtn) {
+                    gmenuBtn.classList.add('show');
+                } else {
+                    console.error(`Element with ID defaultDropdown_${gmenuID} not found`);
+                }
+            }
+        }
+        get_gmenu_show ()
+    </script>
+    <script>
+        get_hotline = async () => {
+            const response = await axios.get(`/api/contacts/all`, {params: { status: "active" }})
+            const data = response.data.data
+            const set_data = $('#hotlinePhone')
+            set_data.html('')
+            data.forEach((item) => {
+                
+                set_data.append(`
+                    <a href="tel:${item.hotphone}">${item.hotphone}</a>
+                `)
+            })
+        }
+        get_hotline()
+    </script>
+</body>
+</body>
+
+</html>

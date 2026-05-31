@@ -1,0 +1,310 @@
+<div class="main__items">
+
+    <h1 style="text-align: center;" class="mt-2">Contacts menu</h1>
+
+    <div class="row col-md-10 ms-16">
+        <button data-bs-toggle="offcanvas" data-bs-target="#CREATE_DATA" aria-controls="CREATE_DATA" type="button"
+            class="btn col-md-1 btn-success btn-sm">Create</button>
+        <button data-bs-toggle="offcanvas" data-bs-target="#ARCHIVE_DATA" aria-controls="ARCHIVE_DATA" type="button"
+            class="btn col-md-1 btn-danger btn-sm  ms-1">Archive</button>
+    
+    </div>
+    
+    
+    <!-- Jadval -->
+    <div class="row col-md-12 mt-2" style="padding: 20px 110px;">
+        <div class="col-md-12">
+            <table class="table table-bordered text-center" style="width: 100%;">
+                <thead>
+                    <tr class="table-dark">
+                        <th scope="col">#</th>
+                        <th scope="col">Hotline</th>
+                        <th scope="col">Website</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col" style="width: 5%;">Status</th>
+                        <th scope="col" style="width: 5%;">Sana</th>
+                        <th scope="col" style="width: 5%;">Sozlama</th>
+                    </tr>
+                </thead>
+                <tbody class="SET-TABLE">
+    
+                </tbody>
+            </table>
+            <div class="links">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Create -->
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="CREATE_DATA"
+    aria-labelledby="CREATE_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Create</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <input type="text" class="form-control form-control-sm" id="twitter" placeholder="X">
+        <input type="text" class="form-control form-control-sm mt-2" id="linkedin" placeholder="LinkedIn">
+        <input type="text" class="form-control form-control-sm mt-2" id="facebook" placeholder="Faceboook">
+        <input type="text" class="form-control form-control-sm mt-2" id="telegram" placeholder="Telegram">
+        <input type="text" class="form-control form-control-sm mt-2" id="instagram" placeholder="Instagram">
+        <input type="text" class="form-control form-control-sm mt-2" id="TimeUz" placeholder="Time - uz">
+        <input type="text" class="form-control form-control-sm mt-2" id="TimeRu" placeholder="Time - ru">
+        <input type="text" class="form-control form-control-sm mt-2" id="TimeEng" placeholder="Time - rng">
+        <input type="text" class="form-control form-control-sm mt-2" id="AddressUz" placeholder="Address - uz">
+        <input type="text" class="form-control form-control-sm mt-2" id="AddressRu" placeholder="Address - ru">
+        <input type="text" class="form-control form-control-sm mt-2" id="AddressEng" placeholder="Address - eng">
+        <input type="text" class="form-control form-control-sm mt-2" id="website" placeholder="WebSite">
+        <input type="text" class="form-control form-control-sm mt-2" id="phone" placeholder="Phone">
+        <input type="text" class="form-control form-control-sm mt-2" id="hotphone" placeholder="HotPhone">
+        <input type="text" class="form-control form-control-sm mt-2" id="email" placeholder="email">
+        <button onclick="create_data()" type="button" class="btn col-md-3 mt-3 btn-success btn-sm">Save</button>
+    </div>
+</div>
+<!-- Archive -->
+<div class="offcanvas offcanvas-end" style="width: 55%;" data-bs-backdrop="static" tabindex="-1" id="ARCHIVE_DATA"
+    aria-labelledby="ARCHIVE_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Archive datas</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col">#</th>
+                    <th scope="col">Hotline</th>
+                    <th scope="col">Website</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Socials</th>
+                    <th scope="col" style="width: 5%;">Status</th>
+                    <th scope="col" style="width: 5%;">Sana</th>
+                    <th scope="col" style="width: 15%;">Sozlama</th>
+                </tr>
+            </thead>
+            <tbody class="SET-TABLE-ARCHIVE">
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<!-- Edit -->
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="EDIT_DATA" aria-labelledby="EDIT_DATA">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="staticBackdropLabel">Edit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body edit-data">
+
+    </div>
+</div>
+
+
+<script src="/assets/js/axios.min.js"></script>
+<script>
+
+
+    const set_table_data = async (Arrays, Classes) => {
+        const result = Arrays;
+        const setTable = $(Classes)
+        await setTable.html("")
+        
+        const setLink = $(".links")
+        await setLink.html("")
+
+        result.forEach((item, index) => {
+            setLink.append(`
+                <p>X (Twitter): <a href="${item.socialNet.x}">${item.socialNet.x}</a></p>
+                <p>LinkedIn: <a href="${item.socialNet.linkedIn}">${item.socialNet.linkedIn}</a></p>
+                <p>Facebook: <a href="${item.socialNet.facebook}">${item.socialNet.facebook}</a></p>
+                <p>Telegram: <a href="${item.socialNet.telegram}">${item.socialNet.telegram}</a></p>
+                <p>Instagram: <a href="${item.socialNet.instagram}">${item.socialNet.instagram}</a></p>
+            `)
+            setTable.append(`
+                    <tr>
+                        <th>${index += 1}</th>
+                        <td>${item.hotphone}</td>
+                        <td><a href="${item.website}">${item.website}</a></td>
+                        <td>${item.workingTime.uz}</td>
+                        <td>${item.address.uz}</td>
+                        <td>${item.phone}</td>
+                        <td>${item.email}</td>
+                        <td>
+                            ${item.status == 'active' ?
+                            `<span style="font-weight: 500; font-size: 13px;" class="badge text-bg-success">Active</span>`
+                            :
+                            `<span style="font-weight: 500; font-size: 13px;" class="badge text-bg-danger">Freeze</span>`
+                            }
+                        </td>
+                        <td>${new Date(item.createdAt).toLocaleDateString('en-GB')}</td>
+                        <td>
+                            
+                            ${item.status == 'active' ?
+                    `
+                                    <button data-bs-toggle="offcanvas" data-bs-target="#EDIT_DATA" aria-controls="EDIT_DATA" onclick="get_data('${item._id}')" type="button" class="btn btn-warning btn-sm" style="font-size: 12px;" >
+                                        Edit
+                                    </button>
+                                    <button onclick="change_status('${item._id}', 'archive')" type="button" class="btn btn-danger btn-sm" style="font-size: 12px;" >
+                                        Archive
+                                    </button>
+                                `
+                    :
+                    `
+                                    <button onclick="change_status('${item._id}', 'active')" type="button" class="btn btn-primary btn-sm" style="font-size: 12px;" >
+                                        Active
+                                    </button>
+                                    <button onclick="fullDelete('${item._id}')" type="button" class="btn btn-danger btn-sm" style="font-size: 12px;" >
+                                        Dell
+                                    </button>
+                                `
+                }
+                        </td>
+                    </tr>
+                `)
+            
+        });
+        
+        
+        
+        
+
+    }
+
+    const get_all_datas = async (Status) => {
+        axios.get("/api/contacts/all", { params: { status: Status } }).then(async (res) => {
+            if (Status == 'active') {
+                set_table_data(res.data.data, '.SET-TABLE')
+            }
+            else {
+                set_table_data(res.data.data, '.SET-TABLE-ARCHIVE')
+            }
+        })
+    }
+    get_all_datas('active')    
+    get_all_datas('archive')    
+
+    // 2.Create
+    const create_data = async () => {
+        const x = document.getElementById("twitter").value;
+        const linkedin = document.getElementById("linkedin").value;
+        const facebook = document.getElementById("facebook").value;
+        const telegram = document.getElementById("telegram").value;
+        const instagram = document.getElementById("instagram").value;
+        const AddressUz = document.getElementById("AddressUz").value;
+        const AddressRu = document.getElementById("AddressRu").value;
+        const AddressEng = document.getElementById("AddressEng").value;
+        const TimeUz = document.getElementById("TimeUz").value;
+        const TimeRu = document.getElementById("TimeRu").value;
+        const TimeEng = document.getElementById("TimeEng").value;
+        const website = document.getElementById("website").value;
+        const phone = document.getElementById("phone").value;
+        const hotphone = document.getElementById("hotphone").value;
+        const email = document.getElementById("email").value;
+        
+        axios.post("/api/contacts/create", { socialNet: {x: x, linkedIn: linkedin, facebook: facebook, telegram: telegram, instagram: instagram}, address: {uz: AddressUz, ru: AddressRu, eng: AddressEng}, workingTime: {uz: TimeUz, ru: TimeRu, eng: TimeEng}, website, email, phone, hotphone }).then((res) => {
+            const result = res.data;
+            if (result.status == true) {
+                get_all_datas('active') 
+            }
+        })
+    }
+
+    // 3.Get and edit
+    const get_data = async (id) => {
+        axios.get(`/api/contacts/${id}`).then(async (res) => {
+            const result = res.data;
+            if (result.status == true) {
+                // const data = res.data.data; // [{}, {}, {}, ...]
+                const setTable = $(".edit-data")
+                await setTable.html("")
+                setTable.append(`
+                    <label>Links</label>
+                    <input type="text" value="${result.data.socialNet.x}" class="form-control form-control-sm" id="twittere" placeholder="X">
+                    <input type="text" value="${result.data.socialNet.linkedIn}" class="form-control form-control-sm mt-2" id="linkedine" placeholder="LinkedIn">
+                    <input type="text" value="${result.data.socialNet.facebook}" class="form-control form-control-sm mt-2" id="facebooke" placeholder="Faceboook">
+                    <input type="text" value="${result.data.socialNet.telegram}" class="form-control form-control-sm mt-2" id="telegrame" placeholder="Telegram">
+                    <input type="text" value="${result.data.socialNet.instagram}" class="form-control form-control-sm mt-2" id="instagrame" placeholder="Instagram">
+                    
+                    <label class="mt-2">WorkingTime</label>
+                    <input type="text" value="${result.data.workingTime.uz}" class="form-control form-control-sm" id="TimeUze" placeholder="Time - uz">
+                    <input type="text" value="${result.data.workingTime.ru}" class="form-control form-control-sm mt-2" id="TimeRue" placeholder="Time - ru">
+                    <input type="text" value="${result.data.workingTime.eng}" class="form-control form-control-sm mt-2" id="TimeEnge" placeholder="Time - rng">
+                    
+                    <label class="mt-2">Address</label>
+                    <input type="text" value="${result.data.address.uz}" class="form-control form-control-sm" id="AddressUze" placeholder="Address - uz">
+                    <input type="text" value="${result.data.address.ru}" class="form-control form-control-sm mt-2" id="AddressRue" placeholder="Address - ru">
+                    <input type="text" value="${result.data.address.eng}" class="form-control form-control-sm mt-2" id="AddressEnge" placeholder="Address - eng">
+                    
+                    <label class="mt-2">Website</label>
+                    <input type="text" value="${result.data.website}" class="form-control form-control-sm" id="websitee" placeholder="WebSite">
+                    <label class="mt-2">Phone</label>
+                    <input type="text" value="${result.data.phone}" class="form-control form-control-sm" id="phonee" placeholder="Phone">
+                    <label class="mt-2">Hotline</label>
+                    <input type="text" value="${result.data.hotphone}" class="form-control form-control-sm" id="hotphonee" placeholder="HotPhone">
+                    <label class="mt-2">Email</label>
+                    <input type="text" value="${result.data.email}" class="form-control form-control-sm" id="emaile" placeholder="email">
+                    
+                    <button onclick="update_data('${result.data._id}')" type="button" class="btn col-md-3 mt-3 btn-success btn-sm">Edit</button>
+                `);
+            }
+        })
+    }
+
+    // 4.Edit
+    const update_data = async (id) => {
+        const x = document.getElementById("twittere").value;
+        const linkedin = document.getElementById("linkedine").value;
+        const facebook = document.getElementById("facebooke").value;
+        const telegram = document.getElementById("telegrame").value;
+        const instagram = document.getElementById("instagrame").value;
+        const AddressUz = document.getElementById("AddressUze").value;
+        const AddressRu = document.getElementById("AddressRue").value;
+        const AddressEng = document.getElementById("AddressEnge").value;
+        const TimeUz = document.getElementById("TimeUze").value;
+        const TimeRu = document.getElementById("TimeRue").value;
+        const TimeEng = document.getElementById("TimeEnge").value;
+        const website = document.getElementById("websitee").value;
+        const phone = document.getElementById("phonee").value;
+        const hotphone = document.getElementById("hotphonee").value;
+        const email = document.getElementById("emaile").value;
+        axios.put(`/api/contacts/${id}`, { socialNet: {x: x, linkedIn: linkedin, facebook: facebook, telegram: telegram, instagram: instagram}, address: {uz: AddressUz, ru: AddressRu, eng: AddressEng}, workingTime: {uz: TimeUz, ru: TimeRu, eng: TimeEng}, website, email, phone, hotphone }).then((res) => {
+            const result = res.data;
+            if (result.status == true) {
+                get_all_datas('active')  
+                get_all_datas('archive')  
+            }
+        })
+    }
+
+    // 5.Faollashtir yoki Archivelash
+    const change_status = async (id, statusName) => {
+        axios.put(`/api/contacts/${id}`, { status: statusName }).then((res) => {
+            const result = res.data;
+            if (result.status == true) {
+                get_all_datas('active')    
+                get_all_datas('archive')   
+            }
+        })
+    }
+
+    const fullDelete = async (id) => {
+        axios.delete(`/api/contacts/${id}`).then((res) => {
+            const data = res.data.data;
+            get_all_datas('active')    
+            get_all_datas('archive') 
+        })
+    }
+
+</script>

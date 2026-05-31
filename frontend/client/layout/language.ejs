@@ -1,0 +1,31 @@
+<button onclick="changeLanguage('uz')" type="button" class="currency-btn btn-reset text-white">
+    <span>Uz</span>
+</button>
+
+<button onclick="changeLanguage('ru')" type="button" class="currency-btn btn-reset text-white ms-3">
+    <span>Ru</span>
+</button>
+
+<button onclick="changeLanguage('eng')" type="button" class="currency-btn btn-reset text-white ms-3">
+    <span>Eng</span>
+</button>
+
+
+
+
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/axios.min.js"></script>
+<script>
+
+
+    const changeLanguage = (lang) => {
+        axios.get(`/api/language/${lang}`).then((res) => {
+            window.location.reload()
+        })
+    }
+
+
+
+
+
+</script>

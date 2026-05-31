@@ -1,0 +1,67 @@
+<div class="article-page mt-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-12">
+                <div class="article-rte">
+                    <div class="article-img">
+                        <img id="IMAGE" src="" alt="img">
+                    </div>
+                    <div class="article-meta">
+                        <h2 class="article-title" id="NAME"></h2>
+                    </div>
+
+                    <div class="article-content">
+                        <p id="DESCRIPTION"></p>
+                    </div>
+                    <div class="article-content">
+                        <h2 style="font-size: 16px;" class="article-title" id="PRICE"></h2>
+                    </div>
+                  
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-12 col-12">
+                <div class="filter-drawer blog-sidebar">
+                    <div class="filter-widget widget-blogger text-center">
+                        <div class="blogger-img mb-3">
+                            <img class="rounded" id="USER_IMAGE" src="" alt="img">
+                        </div>
+                        <h4 id="USER" class="blogger-name heading_18 mb-1"></h4>
+                        <h4 id="PHONE" class="blogger-name heading_18 mb-1"></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/js/axios.min.js"></script>
+<script src="/assets/js/jquery.min.js"></script>
+
+<script>
+
+    const id = String(window.location.pathname).split("/")[2]
+
+    const setHTML = async () => {
+        axios.get(`/api/announcement/${id}`).then( async (res) => {
+            const data = res.data.data;
+
+            console.log(data)
+
+
+            document.getElementById("USER").innerHTML = data.userID.name
+            document.getElementById("PHONE").innerHTML = data.userID.phone
+            document.getElementById("NAME").innerHTML = data.name
+            document.getElementById("PRICE").innerHTML = "Narxi: " + data.price + " so'm"
+            document.getElementById("DESCRIPTION").innerHTML = data.description;
+            document.getElementById("IMAGE").src = `/upload/${data.image[0]}`;
+            document.getElementById("USER_IMAGE").src = data.userID.image == undefined ? '/client/assets/img/amaki.jpg' : `/upload/${data.userID.image}`;
+
+
+        })
+    }
+    setHTML()
+
+
+
+</script>
