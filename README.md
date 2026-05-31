@@ -13,7 +13,7 @@
 
 ### Как запустить:
 1. **Запустите командную строку в самой папке с проектом.** Например:
-   * Встроенный терминал **VS Code** (нажмите `Ctrl + \``)
+   * Встроенный терминал **VS Code** (нажмите "Ctrl + ` ")
    * **Git Bash** (нажмите правой кнопкой мыши внутри папки -> *Git Bash Here*)
    * **Windows Shell** (Командная строка или PowerShell)
 
@@ -38,7 +38,7 @@
 ### How to run:
 
 1. **Open the command line directly in the project folder.** For example:
-* **VS Code** integrated terminal (press `Ctrl + ``)
+* **VS Code** integrated terminal (press "Ctrl + ` ")
 * **Git Bash** (right-click inside the folder -> *Git Bash Here*)
 * **Windows Shell** (Command Prompt or PowerShell)
 
