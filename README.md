@@ -38,9 +38,9 @@
 ### How to run:
 
 1. **Open the command line directly in the project folder.** For example:
-* **VS Code** integrated terminal (press "Ctrl + ` ")
-* **Git Bash** (right-click inside the folder -> *Git Bash Here*)
-* **Windows Shell** (Command Prompt or PowerShell)
+   * **VS Code** integrated terminal (press "Ctrl + ` ")
+   * **Git Bash** (right-click inside the folder -> *Git Bash Here*)
+   * **Windows Shell** (Command Prompt or PowerShell)
 
 
 2. **Install dependencies:** Run the following command and wait for it to finish:
